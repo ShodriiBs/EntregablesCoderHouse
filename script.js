@@ -76,12 +76,12 @@ function adquirirAuto(autoParaAdquirir, marcaAutoComprar) { //Menu para comprar 
         adquirirAutoValor += (i + 1) + "- " + autoParaAdquirir[i][0] + " - USD: " + autoParaAdquirir[i][1] + "\n"
     }
 
-    var seleccionAuto = parseInt(prompt("Por favor, indique qué auto desea comprar: \n" + adquirirAutoValor + "4- Salir al menú principal"))
+    var seleccionAuto = parseInt(prompt("Por favor, indique qué auto desea comprar: \n" + adquirirAutoValor + "4- Salir"))
 
     if (seleccionAuto == 1 || seleccionAuto == 2 || seleccionAuto == 3) {
         alert("¡Muchas gracias por confiar en nosotros! Y felicidades por su nuevo " + marcaAutoComprar + " " + autoParaAdquirir[seleccionAuto - 1][0])
     } else if (seleccionAuto == 4) {
-        menuPrincipal()
+
     } else {
         opcionNoValida()
         adquirirAuto(autoParaAdquirir, marcaAutoComprar)
