@@ -11,7 +11,7 @@ if (!ingresoConfirm) {
         if (numMenu == 7) {
             salirConcesionaria()
             ingresoConfirm = false
-        } else {
+        } else if (numMenu >= 1 && numMenu <= 6){
             const seguirComprando = confirm("¿Desea seguir viendo otros vehículos? \nAceptar = Sí \nCancelar = No")
             if (!seguirComprando) {
                 salirConcesionaria()
@@ -46,7 +46,6 @@ function validarOpcionesMenuPrincipal(opcionSeleccionadaMenuPrincipal) {
         // Salir del menú
     } else {
         opcionNoValida()
-        menuPrincipal()
     }
 }
 
