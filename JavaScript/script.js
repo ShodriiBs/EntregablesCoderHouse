@@ -5,9 +5,10 @@ const botonSumar = document.getElementsByClassName("botonParaSumar")
 const stringCantHelado = document.getElementsByClassName("cantidadDeHelados")
 const botonBorrar = document.getElementById("botonRemoveAll")
 const botonContinuarCompra = document.getElementById("botonContinuarBuy")
-const compraDetalles = document.getElementById("detallesCompra")
+let compraDetalles = document.getElementById("detallesCompra")
 const divBotones = document.getElementById("botonesCompra")
 let arrayHelados = []
+let buttonCarrito
 
 
 for (let i = 0; i < botonRestar.length; i++) {
@@ -42,7 +43,12 @@ function buttonRemove(){
 
         compraDetalles.innerHTML = ''
         localStorage.clear()
+
+        if(buttonCarrito){
+            buttonCarrito.remove()
+        }
     }
+    arrayHelados.length = 0
 }
 
 function updateLocalStorage(pedidoDetails, vuelta){
@@ -66,7 +72,7 @@ function clickButtonUpdateBuy() {
     }
 
     if (!document.querySelector(".botonAgregarCarrito")) {
-        const buttonCarrito = document.createElement("button");
+        buttonCarrito = document.createElement("button");
         buttonCarrito.innerHTML = 'Agregar al carrito';
         buttonCarrito.className = 'botonAgregarCarrito';
         divBotones.appendChild(buttonCarrito);
@@ -74,6 +80,7 @@ function clickButtonUpdateBuy() {
         buttonCarrito.addEventListener("click", () => {
             clickButtonAddCarrito(buttonCarrito)
             buttonCarrito.remove()
+            
         }
         );
         
@@ -81,22 +88,19 @@ function clickButtonUpdateBuy() {
 }
 
 function clickButtonAddCarrito(){
-    window.open("carrito.html","_blank")
-
-    let subtotalPedido = 0;
+    window.open("carrito.html","_blank");
 
     for (let i = 0; i < stringCantHelado.length; i++) {
-        const helado = arrayHelados[i];
-        if (helado) { // Verifica si el objeto existe
-            subtotalPedido += helado.Precio * helado.Cantidad;
-        } 
         const cantidadSpan = stringCantHelado[i];
         cantidadSpan.textContent = "0";
     }
 
-    compraDetalles.innerHTML = '';
     clickButtonUpdateBuy();
-    localStorage.setItem("subtotalHelados", subtotalPedido);
+    compraDetalles.innerHTML = '';
+
+    localStorage.setItem("infoArrayHelados", JSON.stringify(arrayHelados));
+    arrayHelados.length = 0
+
 }
 
 function arrayCreatePedido(cantidadHeladoSet, nroSectionHelado){
