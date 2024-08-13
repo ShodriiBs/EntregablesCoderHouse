@@ -3,11 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script defer src="./script.js"></script>
+    <title>(N)ice Cream</title>
+    <script defer src="./JavaScript/script.js"></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h1>Bustos Rodrigo</h1>
-    <p>Idea del simulador: página web de una concesionaria</p>
+
+    <div id="megaContenedorHeader">
+        <div id="contenedorHeader">
+            <h1 id="tituloHeladeria">(N)ice Cream</h1>
+        </div>
+    </div>
+
+    <nav id="navList">
+        <ul id="ulNavHeader">
+            <li><a href="#" class="labelNav">Nuestros helados</a></li>
+            <li><a href="#allSaboresDiv" class="labelNav">Sabores</a></li>
+            <li><a href="#quienesSomosNav" class="labelNav">Quienes somos</a></li>
+            <li><a href="#" class="labelNav">Contacto</a></li>
+        </ul>
+
+    </nav>
+
+    <section id="contenedorHelados">
+        <section id="heladoXCuarto" class="contenedorImagenHelados">
+            <p>1/4kg de helado</p>
+            <img src="https://saintmoritz.com.ar/wp-content/uploads/2020/08/helados-saint-mortiz-mediokg-1-1.png" class="imagenHelados">
+            <div class="cantidadSeleccionada">
+                <p>
+                    <span>Cantidad:</span>
+                    <span class="cantidadDeHelados">0</span>
+                    <button class="botonParaRestar" id="botonRestarCuarto">-</button>
+                    <button class="botonParaSumar">+</button>
+                </p> 
+            </div> 
+        </section>
+        <section id="heladoXMedio" class="contenedorImagenHelados">
+            <p>1/2kg de helado</p>
+            <img src="https://saintmoritz.com.ar/wp-content/uploads/2020/08/helados-saint-mortiz-mediokg-.png" class="imagenHelados">
+            <div class="cantidadSeleccionada">
+                <p>
+                    <span>Cantidad:</span>
+                    <span class="cantidadDeHelados">0</span>
+                    <button class="botonParaRestar">-</button>
+                    <button class="botonParaSumar">+</button>
+                </p> 
+            </div> 
+        </section>
+        <section id="heladoXKilo" class="contenedorImagenHelados">
+            <p>1kg de helado</p>
+            <img src="https://as1.ftcdn.net/v2/jpg/03/88/63/08/1000_F_388630882_V9W4Gj5KsLp5g7V1Z1uwr8JdP305yY6J.jpg" class="imagenHelados">
+            <div class="cantidadSeleccionada">
+                <p>
+                    <span>Cantidad:</span>
+                    <span class="cantidadDeHelados">0</span>
+                    <button class="botonParaRestar">-</button>
+                    <button class="botonParaSumar">+</button>
+                </p> 
+            </div> 
+        </section>
+        <section id="heladoPromo1" class="contenedorImagenHelados">
+            <p>Promo 1</p>
+            <img src="https://bluebell.com.ar/carta/wp-content/uploads/kilohelado.jpg" class="imagenHelados">
+            <div class="cantidadSeleccionada">
+                <p>
+                    <span>Cantidad:</span>
+                    <span class="cantidadDeHelados">0</span>
+                    <button class="botonParaRestar">-</button>
+                    <button class="botonParaSumar">+</button>
+                </p> 
+            </div> 
+        </section>
+        <section id="heladoPromo2" class="contenedorImagenHelados">
+            <p>Promo 2</p>
+            <img src="https://saintmoritz.com.ar/wp-content/uploads/2020/09/promo-2-300x263.jpg" class="imagenHelados">
+            <div class="cantidadSeleccionada">
+                <p>
+                    <span>Cantidad:</span>
+                    <span class="cantidadDeHelados">0</span>
+                    <button class="botonParaRestar">-</button>
+                    <button class="botonParaSumar">+</button>
+                </p> 
+            </div> 
+        </section>
+    </section>
+
+    <div id="detallesCompra"></div>
+
+    <div id="botonesCompra">
+        <button id="botonRemoveAll">Borrar cantidad</button>
+        <button id="botonContinuarBuy">Actualizar Compra</button>
+    </div>
+
+    <div id="allSaboresDiv">
+        <p>Todos nuestros sabores</p>
+        <ul>
+            <li>Dulce de leche</li>
+            <li>Vainilla</li>
+            <li>Oreo</li>
+            <li>Menta Granizada</li>
+            <li>Frutilla a la crema</li>
+            <li>Chocolate suizo</li>
+            <li>Chocolate amargo</li>
+            <li>Banana Split</li>
+            <li>Crema del cielo</li>
+            <li>Pasta frola</li>
+            <li>Tramontana</li>
+            <li>Durazno</li>
+        </ul>
+    </div>
+
+    <div id="quienesSomosNav">
+        <p>Proyecto hecho con mucho cariño por: Rodrigo Bustos</p>
+        <p>CoderHouse: JavaScript Flex</p>
+    </div>    
 </body>
 </html>

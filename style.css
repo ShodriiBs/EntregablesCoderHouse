@@ -1,0 +1,117 @@
+body{
+    background-color: black;
+}
+
+#megaContenedorHeader{
+    background-color: black;
+}
+
+#contenedorHeader{
+    font-family: cursive;
+    font-size: x-large;
+    transition: 2s;
+    width: max-content;
+    margin: 0 auto;
+    position: relative;
+
+}
+
+#contenedorHeader:hover{
+    font-size: xx-large;
+    transition: 2s;
+}
+
+#tituloHeladeria{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+#contenedorHelados{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedorImagenHelados{
+    display: inline-block;
+    margin: 30px;
+}
+
+.imagenHelados{
+    width: 200px;
+    height: 180px;
+    position: relative;
+}
+
+.cantidadSeleccionada{
+    display: inline;
+    width: 100%;
+}
+
+.botonParaRestar{
+    border-radius: 100%;
+    height: 25px;
+    margin-right: 3px;
+}
+
+.botonParaSumar{
+    border-radius: 100%;
+    height: 25px;
+}
+
+.contenedorImagenHelados{
+    padding: 20px;
+    margin: 0;
+}
+
+.contenedorImagenHelados:hover{
+    background-color: rgb(182, 182, 182);
+}
+
+#detallesCompra{
+    background-color: white;
+    padding-left: 50px;
+}
+
+
+#botonesCompra{
+    display: flex;
+    background-color: white;
+    justify-content: end;
+    padding-right: 30px;
+}
+
+#botonRemoveAll{
+    background-color: rgb(245, 72, 72);
+    color: white;
+}
+
+#allSaboresDiv{
+    background-color: white;
+}
+
+#navList{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    margin-bottom: 15px;
+}
+
+#ulNavHeader li{
+    display: inline;
+    text-decoration: none;
+    margin: 20px;
+}
+
+.labelNav{
+    color: black;
+}
+
+#quienesSomosNav{
+    background-color: white;
+}
+
