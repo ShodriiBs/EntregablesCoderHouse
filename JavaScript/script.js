@@ -1,33 +1,33 @@
-let heladoSeleccionado = document.getElementsByClassName("contenedorImagenHelados");
-let divCantHelados = document.getElementsByClassName("cantidadSeleccionada")
-let botonRestar = document.getElementsByClassName("botonParaRestar")
-let botonSumar = document.getElementsByClassName("botonParaSumar")
-let stringCantHelado = document.getElementsByClassName("cantidadDeHelados")
-let botonBorrar = document.getElementById("botonRemoveAll")
-let botonContinuarCompra = document.getElementById("botonContinuarBuy")
-let compraDetalles = document.getElementById("detallesCompra")
-let divBotones = document.getElementById("botonesCompra")
+const heladoSeleccionado = document.getElementsByClassName("contenedorImagenHelados");
+const divCantHelados = document.getElementsByClassName("cantidadSeleccionada")
+const botonRestar = document.getElementsByClassName("botonParaRestar")
+const botonSumar = document.getElementsByClassName("botonParaSumar")
+const stringCantHelado = document.getElementsByClassName("cantidadDeHelados")
+const botonBorrar = document.getElementById("botonRemoveAll")
+const botonContinuarCompra = document.getElementById("botonContinuarBuy")
+const compraDetalles = document.getElementById("detallesCompra")
+const divBotones = document.getElementById("botonesCompra")
 let arrayHelados = []
 
 
 for (let i = 0; i < botonRestar.length; i++) {
     botonRestar[i].addEventListener("click", () => {
-        let cantidadSpan = stringCantHelado[i];
-        let cantidad = parseInt(cantidadSpan.textContent);
+        const cantidadSpan = stringCantHelado[i];
+        const cantidad = parseInt(cantidadSpan.textContent);
         if (cantidad > 0) {
             cantidadSpan.textContent = cantidad - 1;
         }
     });
 
     botonSumar[i].addEventListener("click", () => {
-        let cantidadSpan = stringCantHelado[i];
-        let cantidad = parseInt(cantidadSpan.textContent);
+        const cantidadSpan = stringCantHelado[i];
+        const cantidad = parseInt(cantidadSpan.textContent);
         cantidadSpan.textContent = cantidad + 1;
     });
 }
 
 if(document.getElementById("openCarritoButton")){
-    let botonOpenCarrito = document.getElementById("openCarritoButton")
+    const botonOpenCarrito = document.getElementById("openCarritoButton")
     botonOpenCarrito.addEventListener("click",()=> {})
 }
 
@@ -37,10 +37,11 @@ botonBorrar.addEventListener("click", () => buttonRemove())
 
 function buttonRemove(){
     for (let i = 0; i < stringCantHelado.length; i++) {
-        let cantidadSpan = stringCantHelado[i];
+        const cantidadSpan = stringCantHelado[i];
         cantidadSpan.textContent = "0";
 
-        
+        compraDetalles.innerHTML = ''
+        localStorage.clear()
     }
 }
 
@@ -52,8 +53,8 @@ function clickButtonUpdateBuy() {
     compraDetalles.innerHTML = 'Usted desea comprar: ';
 
     for (let i = 0; i < stringCantHelado.length; i++) {
-        let cantidadSpan = stringCantHelado[i];
-        let cantidad = cantidadSpan.textContent;
+        const cantidadSpan = stringCantHelado[i];
+        const cantidad = cantidadSpan.textContent;
 
         if (cantidad !== "0") {
             const infoSection = arrayCreatePedido(cantidadSpan, i);
@@ -70,8 +71,32 @@ function clickButtonUpdateBuy() {
         buttonCarrito.className = 'botonAgregarCarrito';
         divBotones.appendChild(buttonCarrito);
 
-        buttonCarrito.addEventListener("click", () => {});
+        buttonCarrito.addEventListener("click", () => {
+            clickButtonAddCarrito(buttonCarrito)
+            buttonCarrito.remove()
+        }
+        );
+        
     }
+}
+
+function clickButtonAddCarrito(){
+    window.open("carrito.html","_blank")
+
+    let subtotalPedido = 0;
+
+    for (let i = 0; i < stringCantHelado.length; i++) {
+        const helado = arrayHelados[i];
+        if (helado) { // Verifica si el objeto existe
+            subtotalPedido += helado.Precio * helado.Cantidad;
+        } 
+        const cantidadSpan = stringCantHelado[i];
+        cantidadSpan.textContent = "0";
+    }
+
+    compraDetalles.innerHTML = '';
+    clickButtonUpdateBuy();
+    localStorage.setItem("subtotalHelados", subtotalPedido);
 }
 
 function arrayCreatePedido(cantidadHeladoSet, nroSectionHelado){
@@ -82,7 +107,7 @@ function arrayCreatePedido(cantidadHeladoSet, nroSectionHelado){
             ObjectSection = {
                 Peso: "1/4kg",
                 Cantidad: cantidadHeladoSet.textContent,
-                Precio: "$1000"
+                Precio: 1000
             };
             
             break;
@@ -90,28 +115,28 @@ function arrayCreatePedido(cantidadHeladoSet, nroSectionHelado){
             ObjectSection = {
                 Peso: "1/2kg",
                 Cantidad: cantidadHeladoSet.textContent,
-                Precio: "$1800"
+                Precio: 1800
             };
             break;
         case 2:
             ObjectSection = {
                 Peso: "1kg",
                 Cantidad: cantidadHeladoSet.textContent,
-                Precio: "$3500"
+                Precio: 3500
             };
             break;
         case 3:
             ObjectSection = {
                 Peso: "1 3/4kg ",
                 Cantidad: cantidadHeladoSet.textContent,
-                Precio: "$6000"
+                Precio: 6000
             };
             break;
         case 4:
             ObjectSection = {
                 Peso: "2kg",
                 Cantidad: cantidadHeladoSet.textContent,
-                Precio: "$6500"
+                Precio: 6500
             };
             break;
     }
