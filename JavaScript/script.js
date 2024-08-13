@@ -1,4 +1,4 @@
-const heladoSeleccionado = document.getElementsByClassName("contenedorImagenHelados");
+const heladoSeleccionado = document.getElementsByClassName("contenedorImagenHelados")
 const divCantHelados = document.getElementsByClassName("cantidadSeleccionada")
 const botonRestar = document.getElementsByClassName("botonParaRestar")
 const botonSumar = document.getElementsByClassName("botonParaSumar")
@@ -13,17 +13,17 @@ let buttonCarrito = null
 for (let i = 0; i < botonRestar.length; i++) {
     botonRestar[i].addEventListener("click", () => {
         const cantidadSpan = stringCantHelado[i];
-        const cantidad = parseInt(cantidadSpan.textContent);
+        const cantidad = parseInt(cantidadSpan.textContent)
         if (cantidad > 0) {
-            cantidadSpan.textContent = cantidad - 1;
+            cantidadSpan.textContent = cantidad - 1
         }
-    });
+    })
 
     botonSumar[i].addEventListener("click", () => {
-        const cantidadSpan = stringCantHelado[i];
-        const cantidad = parseInt(cantidadSpan.textContent);
-        cantidadSpan.textContent = cantidad + 1;
-    });
+        const cantidadSpan = stringCantHelado[i]
+        const cantidad = parseInt(cantidadSpan.textContent)
+        cantidadSpan.textContent = cantidad + 1
+    })
 }
 
 botonContinuarCompra.addEventListener("click", () => clickButtonUpdateBuy());
@@ -35,8 +35,8 @@ function buttonRemove(){
     for (let i = 0; i < stringCantHelado.length; i++) {
         botonRestar[i].disabled = false
         botonSumar[i].disabled = false
-        const cantidadSpan = stringCantHelado[i];
-        cantidadSpan.textContent = "0";
+        const cantidadSpan = stringCantHelado[i]
+        cantidadSpan.textContent = "0"
 
         compraDetalles.innerHTML = ''
         localStorage.clear()
@@ -54,28 +54,28 @@ function updateLocalStorage(pedidoDetails, vuelta){
 
 function clickButtonUpdateBuy() {
     botonContinuarCompra.disabled = true
-    compraDetalles.innerHTML = 'Usted desea comprar: ';
+    compraDetalles.innerHTML = 'Usted desea comprar: '
 
 
     for (let i = 0; i < stringCantHelado.length; i++) {
-        const cantidadSpan = stringCantHelado[i];
-        const cantidad = cantidadSpan.textContent;
+        const cantidadSpan = stringCantHelado[i]
+        const cantidad = cantidadSpan.textContent
         botonRestar[i].disabled = true
         botonSumar[i].disabled = true
 
         if (cantidad !== "0") {
-            const infoSection = arrayCreatePedido(cantidadSpan, i);
-            const pedidoLinea = document.createElement("div");
-            pedidoLinea.innerHTML = `<span class="lineaPedidoInfo">${infoSection}</span>`;
-            compraDetalles.appendChild(pedidoLinea);
-            updateLocalStorage(infoSection, i);
+            const infoSection = arrayCreatePedido(cantidadSpan, i)
+            const pedidoLinea = document.createElement("div")
+            pedidoLinea.innerHTML = `<span class="lineaPedidoInfo">${infoSection}</span>`
+            compraDetalles.appendChild(pedidoLinea)
+            updateLocalStorage(infoSection, i)
         }
     }
 
     if (!document.querySelector(".botonAgregarCarrito")) {
-        buttonCarrito = document.createElement("button");
-        buttonCarrito.innerHTML = 'Agregar al carrito';
-        buttonCarrito.className = 'botonAgregarCarrito';
+        buttonCarrito = document.createElement("button")
+        buttonCarrito.innerHTML = 'Agregar al carrito'
+        buttonCarrito.className = 'botonAgregarCarrito'
         divBotones.appendChild(buttonCarrito);
 
         buttonCarrito.addEventListener("click", () => {
@@ -84,7 +84,7 @@ function clickButtonUpdateBuy() {
             buttonCarrito.remove()
             botonContinuarCompra.disabled = false
             }
-        );
+        )
         
     }
 }
@@ -93,25 +93,25 @@ function clickButtonAddCarrito(){
     window.open("carrito.html","_blank");
 
     for (let i = 0; i < stringCantHelado.length; i++) {
-        const cantidadSpan = stringCantHelado[i];
-        cantidadSpan.textContent = "0";
+        const cantidadSpan = stringCantHelado[i]
+        cantidadSpan.textContent = "0"
     }
 
-    clickButtonUpdateBuy();
+    clickButtonUpdateBuy()
 
     for (let i = 0; i < stringCantHelado.length; i++) {
         botonRestar[i].disabled = false
         botonSumar[i].disabled = false
     }
-    compraDetalles.innerHTML = '';
+    compraDetalles.innerHTML = ''
 
-    localStorage.setItem("infoArrayHelados", JSON.stringify(arrayHelados));
+    localStorage.setItem("infoArrayHelados", JSON.stringify(arrayHelados))
     arrayHelados.length = 0
 
 }
 
 function arrayCreatePedido(cantidadHeladoSet, nroSectionHelado){
-    let ObjectSection = {};
+    let ObjectSection = {}
 
     switch(nroSectionHelado){
         case 0:
@@ -119,7 +119,7 @@ function arrayCreatePedido(cantidadHeladoSet, nroSectionHelado){
                 Peso: "1/4kg",
                 Cantidad: cantidadHeladoSet.textContent,
                 Precio: 1000
-            };
+            }
             
             break;
         case 1:
@@ -127,14 +127,14 @@ function arrayCreatePedido(cantidadHeladoSet, nroSectionHelado){
                 Peso: "1/2kg",
                 Cantidad: cantidadHeladoSet.textContent,
                 Precio: 1800
-            };
+            }
             break;
         case 2:
             ObjectSection = {
                 Peso: "1kg",
                 Cantidad: cantidadHeladoSet.textContent,
                 Precio: 3500
-            };
+            }
             break;
         case 3:
             ObjectSection = {
@@ -142,7 +142,7 @@ function arrayCreatePedido(cantidadHeladoSet, nroSectionHelado){
                 Cantidad: cantidadHeladoSet.textContent,
                 Precio: 6000,
                 Promo: "1 pote de 1kg, 1 pote de 1/2kg y 1 pote de 1/4kg"
-            };
+            }
             break;
         case 4:
             ObjectSection = {
@@ -150,23 +150,23 @@ function arrayCreatePedido(cantidadHeladoSet, nroSectionHelado){
                 Cantidad: cantidadHeladoSet.textContent,
                 Precio: 6500,
                 Promo: "2 potes de 1kg"
-            };
+            }
             break;
     }
 
     
-    arrayHelados.push(ObjectSection);
+    arrayHelados.push(ObjectSection)
 
-    let infoDePedidoHelado = "";
+    let infoDePedidoHelado = ""
     for (let i = 0; i < arrayHelados.length; i++) {
 
         if (arrayHelados[i].Promo && arrayHelados[i].Cantidad > 0) {
-            infoDePedidoHelado = "-" + arrayHelados[i].Cantidad + " promo/s de " + arrayHelados[i].Peso + " (" + arrayHelados[i].Promo + ")\n";
+            infoDePedidoHelado = "-" + arrayHelados[i].Cantidad + " promo/s de " + arrayHelados[i].Peso + " (" + arrayHelados[i].Promo + ")\n"
         } else {
-            infoDePedidoHelado = "-" + arrayHelados[i].Cantidad + " potes de " + arrayHelados[i].Peso + "\n";
+            infoDePedidoHelado = "-" + arrayHelados[i].Cantidad + " potes de " + arrayHelados[i].Peso + "\n"
         }
         
     }
 
-    return infoDePedidoHelado;
+    return infoDePedidoHelado
 }
