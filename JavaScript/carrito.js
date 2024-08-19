@@ -10,28 +10,23 @@ let infoJSONPedidoString = localStorage.getItem("infoArrayHelados");
 
 let infoJSONPedido = JSON.parse(infoJSONPedidoString);
 
-for (let i = 0; i < infoJSONPedido.length; i++) {
 
-    if (infoJSONPedido[i].Promo && infoJSONPedido[i].Cantidad > 0) {
-
-        const detallesFinales = document.createElement("div");
-        detallesFinales.innerHTML = `<p>-${infoJSONPedido[i].Cantidad} promo/s de ${infoJSONPedido[i].Peso} = ${infoJSONPedido[i].Cantidad} * ${infoJSONPedido[i].Precio}</p>`;
-        infoDetallesPedido.appendChild(detallesFinales);
-
+infoJSONPedido.forEach(item => {
+    const detallesFinales = document.createElement("div");
+    if (item.Promo && item.Cantidad > 0) {
+        detallesFinales.innerHTML = `<p>-${item.Cantidad} promo/s de ${item.Peso} = ${item.Cantidad} * ${item.Precio}</p>`;
     } else {
-
-        const detallesFinales = document.createElement("div");
-        detallesFinales.innerHTML = `<p>-${infoJSONPedido[i].Cantidad} pote/s de ${infoJSONPedido[i].Peso} = ${infoJSONPedido[i].Cantidad} * ${infoJSONPedido[i].Precio}</p>`;
-        infoDetallesPedido.appendChild(detallesFinales);
+        detallesFinales.innerHTML = `<p>-${item.Cantidad} pote/s de ${item.Peso} = ${item.Cantidad} * ${item.Precio}</p>`;
     }
+    infoDetallesPedido.appendChild(detallesFinales);
+});
 
-}
 
-let totalPedido = 0; 
+let totalPedido = infoJSONPedido.reduce((total, item) => {
+    return total + (item.Precio * item.Cantidad);
+}, 0);
 
-for (let i = 0; i < infoJSONPedido.length; i++) { 
-    totalPedido += infoJSONPedido[i].Precio * infoJSONPedido[i].Cantidad 
-}
+subtotalPedido.innerText = `El total del pedido es de: $${totalPedido}`;
 
 const divElegirnos = document.createElement("h3")
 divElegirnos.innerHTML = '¡Muchas gracias por elegir (N)ice Cream! Que tenga un excelente día :)'
@@ -44,9 +39,6 @@ buttonDatosPersonales.addEventListener("click", ()=> {
     inputTelefono.disabled = true
     inputDireccion.disabled = true
 })
-
-
-subtotalPedido.innerText = `El total del pedido es: $${totalPedido}`;
 
 dataJSON.innerText = `Detalles de tu factura (Información del localStorage antes de ser limpiada): ${infoJSONPedidoString}`
 

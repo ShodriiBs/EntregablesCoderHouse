@@ -83,7 +83,6 @@ body{
     justify-content: end;
     padding-right: 30px;
     padding-bottom: 15px;
-    
 }
 
 #botonRemoveAll{
@@ -117,3 +116,13 @@ body{
     background-color: white;
 }
 
+#resumenPedido{
+    background-color: white;
+}
+
+#FinalizarCompra{
+    display: block;
+    background-color: white;
+    padding-right: 30px;
+    padding-left: 30px;
+}
