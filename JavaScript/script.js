@@ -48,11 +48,11 @@ function renderHelados() {
     helados.forEach((helado, index) => {
         contenedorHelados.innerHTML += `
             <section id="${helado.id}" class="contenedorImagenHelados">
-                <p>${helado.descripcion} $${helado.precio}</p>
+                <p class="informacionSectionHelado">${helado.descripcion} $${helado.precio}</p>
                 <img src="${helado.imgSrc}" class="imagenHelados">
                 <div class="cantidadSeleccionada">
                     <p>
-                        <span>Cantidad:</span>
+                        <span class="cantidadHeladosSpan">Cantidad:</span>
                         <span class="cantidadDeHelados" data-index="${index}">${helado.cantidad}</span>
                         <button class="botonParaRestar" data-index="${index}">-</button>
                         <button class="botonParaSumar" data-index="${index}">+</button>

@@ -16,6 +16,12 @@ body{
 
 }
 
+#LineaDivisoria1{
+    background-color: black;
+    height: 5px;
+    margin-bottom: 5px;
+}
+
 #contenedorHeader:hover{
     font-size: xx-large;
     transition: 2s;
@@ -92,6 +98,12 @@ body{
 
 #allSaboresDiv{
     background-color: white;
+    display: flex;
+    justify-content: center;
+}
+
+#tituloSabores{
+    font-size: 30px;
 }
 
 #navList{
@@ -106,6 +118,7 @@ body{
     display: inline;
     text-decoration: none;
     margin: 20px;
+    font-size: 20px;
 }
 
 .labelNav{
@@ -125,4 +138,23 @@ body{
     background-color: white;
     padding-right: 30px;
     padding-left: 30px;
+}
+
+.botonAgregarCarrito{
+    background-color: rgb(77, 173, 77);
+    color: white;
+    height: 40px;
+    font-size: 16px;
+}
+
+.informacionSectionHelado{
+    font-size: 18px;
+}
+
+.cantidadDeHelados{
+    font-size: 16px;
+}
+
+.cantidadHeladosSpan{
+    font-size: 16px;
 }
