@@ -69,46 +69,31 @@ function asignarEventos(data) {
 function agregarAlCarrito(helado, index) {
     const cantidadElement = document.querySelector(`.cantidadDeHelados[data-index="${index}"]`);
     const cantidad = parseInt(cantidadElement.innerText);
+    
+    const infoSection = arrayCreatePedido(helado);
+    Swal.fire({
+        title: "Añadido al carrito",
+        text: cantidad + infoSection,
+        icon: "success"
+    });
 
-    if (cantidad > 0) {
-        helado.cantidad = cantidad;
-        const cantidadExistente = compraDetalles.querySelectorAll(".lineaPedidoInfo");
-        let elementoExistente = null;
+    const seccionHelado = document.getElementById(helado.id);
+    const divBotonesUX = seccionHelado.querySelector('.divBotonesUX');
 
-        cantidadExistente.forEach(elemento => {
-            if (elemento.dataset.idHelado === helado.id) {
-                elementoExistente = elemento;
-            }
-        });
-
-        if (elementoExistente) {
-            const nuevaInfo = arrayCreatePedido(helado);
-            elementoExistente.innerHTML = nuevaInfo;
-        } else {
-            const infoSection = arrayCreatePedido(helado);
-            const pedidoLinea = document.createElement("div");
-            pedidoLinea.classList.add("lineaPedidoInfo");
-            pedidoLinea.setAttribute("data-id-helado", helado.id);
-            pedidoLinea.innerHTML = infoSection;
-            compraDetalles.appendChild(pedidoLinea);
-        }
-
-        const seccionHelado = document.getElementById(helado.id);
-        const divBotonesUX = seccionHelado.querySelector('.divBotonesUX');
-        if (!divBotonesUX.querySelector('.botonLimpiarPedido')) {
-            const botonLimpiar = document.createElement('button');
-            botonLimpiar.className = 'botonLimpiarPedido';
-            botonLimpiar.innerText = 'Limpiar pedido';
-            botonLimpiar.addEventListener('click', () => limpiarPedido(index));
-            divBotonesUX.appendChild(botonLimpiar);
-        }
-
-        updateLocalStorage();
+    if (!divBotonesUX.querySelector('.botonLimpiarPedido')) {
+        const botonLimpiar = document.createElement('button');
+        botonLimpiar.className = 'botonLimpiarPedido';
+        botonLimpiar.innerText = 'Limpiar pedido';
+        botonLimpiar.addEventListener('click', () => limpiarPedido(index));
+        divBotonesUX.appendChild(botonLimpiar);
     }
+
+    updateLocalStorage();
+    
 }
 
 function limpiarPedido(index) {
-    const helado = arrayHelados.find(item => item.id === helado[index].id);
+    const helado = arrayHelados[index]; // Cambiado aquí
     if (helado) {
         helado.cantidad = 0;
         renderHelados();
@@ -269,9 +254,9 @@ function arrayCreatePedido(helado) {
 
     let infoDePedidoHelado = "";
     if (helado.promo) {
-        infoDePedidoHelado = `-${helado.cantidad} promo/s de ${helado.descripcion} (${helado.promo})\n`;
+        infoDePedidoHelado = ` promo/s de ${helado.descripcion} (${helado.promo})\n`;
     } else {
-        infoDePedidoHelado = `-${helado.cantidad} pote/s de ${helado.descripcion}\n`;
+        infoDePedidoHelado = ` pote/s de ${helado.descripcion}\n`;
     }
 
     return infoDePedidoHelado;
