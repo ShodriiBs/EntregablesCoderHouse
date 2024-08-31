@@ -1,84 +1,50 @@
-const helados = [
-    {
-        id: "heladoXCuarto",
-        descripcion: "1/4kg de helado",
-        precio: 1000,
-        imgSrc: "https://saintmoritz.com.ar/wp-content/uploads/2020/08/helados-saint-mortiz-mediokg-1-1.png",
-        cantidad: 0
-    },
-    {
-        id: "heladoXMedio",
-        descripcion: "1/2kg de helado",
-        precio: 1800,
-        imgSrc: "https://saintmoritz.com.ar/wp-content/uploads/2020/08/helados-saint-mortiz-mediokg-.png",
-        cantidad: 0
-    },
-    {
-        id: "heladoXKilo",
-        descripcion: "1kg de helado",
-        precio: 3500,
-        imgSrc: "https://as1.ftcdn.net/v2/jpg/03/88/63/08/1000_F_388630882_V9W4Gj5KsLp5g7V1Z1uwr8JdP305yY6J.jpg",
-        cantidad: 0
-    },
-    {
-        id: "heladoPromo1",
-        descripcion: "Promo 1",
-        precio: 6000,
-        imgSrc: "https://bluebell.com.ar/carta/wp-content/uploads/kilohelado.jpg",
-        cantidad: 0,
-        promo: "1 pote de 1kg, 1 pote de 1/2kg y 1 pote de 1/4kg"
-    },
-    {
-        id: "heladoPromo2",
-        descripcion: "Promo 2",
-        precio: 6500,
-        imgSrc: "https://saintmoritz.com.ar/wp-content/uploads/2020/09/promo-2-300x263.jpg",
-        cantidad: 0,
-        promo: "2 potes de 1kg"
-    }
-];
-
 const contenedorHelados = document.getElementById("contenedorHelados");
 let compraDetalles = document.getElementById("detallesCompra");
 const botonesCompra = document.getElementById("botonesCompra");
 let arrayHelados = [];
 
-function renderHelados() {
-    contenedorHelados.innerHTML = "";
-    helados.forEach((helado, index) => {
-        contenedorHelados.innerHTML += `
-            <section id="${helado.id}" class="contenedorImagenHelados">
-                <p class="informacionSectionHelado">${helado.descripcion} $${helado.precio}</p>
-                <img src="${helado.imgSrc}" class="imagenHelados">
-                <div class="cantidadSeleccionada">
-                    <p>
-                        <span class="cantidadHeladosSpan">Cantidad:</span>
-                        <span class="cantidadDeHelados" data-index="${index}">${helado.cantidad}</span>
-                        <button class="botonParaRestar" data-index="${index}">-</button>
-                        <button class="botonParaSumar" data-index="${index}">+</button>
-                    </p>
-                </div>
-                <div class="divBotonesUX">
-                    <button class="botonAgregarCarrito" data-index="${index}">Añadir al carrito</button>
-                </div>
-            </section>
-        `;
-    });
+renderHelados();
 
-    asignarEventos();
+function renderHelados(){
+    fetch("./JSON/helados.json")
+        .then(response => response.json())
+        .then(data => {
+            contenedorHelados.innerHTML = "";
+            data.forEach((helado, index) => {
+                contenedorHelados.innerHTML += `
+                    <section id="${helado.id}" class="contenedorImagenHelados">
+                        <p class="informacionSectionHelado">${helado.descripcion} $${helado.precio}</p>
+                        <img src="${helado.imgSrc}" class="imagenHelados">
+                        <div class="cantidadSeleccionada">
+                            <p>
+                                <span class="cantidadHeladosSpan">Cantidad:</span>
+                                <span class="cantidadDeHelados" data-index="${index}">0</span>
+                                <button class="botonParaRestar" data-index="${index}">-</button>
+                                <button class="botonParaSumar" data-index="${index}">+</button>
+                            </p>
+                        </div>
+                        <div class="divBotonesUX">
+                            <button class="botonAgregarCarrito" data-index="${index}">Añadir al carrito</button>
+                        </div>
+                    </section>`;
+            });
+
+            asignarEventos(data);
+        });
 }
 
-function asignarEventos() {
+function asignarEventos(data) {
     const botonesRestar = document.querySelectorAll(".botonParaRestar");
     const botonesSumar = document.querySelectorAll(".botonParaSumar");
     const botonesAgregarCarrito = document.querySelectorAll(".botonAgregarCarrito");
+    const cantidadHeladoValue = document.querySelectorAll(".cantidadDeHelados");
 
     botonesRestar.forEach(boton => {
         boton.addEventListener("click", () => {
             const index = boton.getAttribute("data-index");
-            if (helados[index].cantidad > 0) {
-                helados[index].cantidad--;
-                renderHelados();
+            let cantidadActual = parseInt(cantidadHeladoValue[index].innerText);
+            if (cantidadActual > 0) {
+                cantidadHeladoValue[index].innerText = --cantidadActual;
             }
         });
     });
@@ -86,22 +52,26 @@ function asignarEventos() {
     botonesSumar.forEach(boton => {
         boton.addEventListener("click", () => {
             const index = boton.getAttribute("data-index");
-            helados[index].cantidad++;
-            renderHelados();
+            let cantidadActual = parseInt(cantidadHeladoValue[index].innerText);
+            cantidadHeladoValue[index].innerText = ++cantidadActual;
         });
     });
 
     botonesAgregarCarrito.forEach(boton => {
         boton.addEventListener("click", () => {
             const index = boton.getAttribute("data-index");
-            agregarAlCarrito(helados[index], index);
+            agregarAlCarrito(data[index], index);
             crearBotonesCarrito();
         });
     });
 }
 
 function agregarAlCarrito(helado, index) {
-    if (helado.cantidad > 0) {
+    const cantidadElement = document.querySelector(`.cantidadDeHelados[data-index="${index}"]`);
+    const cantidad = parseInt(cantidadElement.innerText);
+
+    if (cantidad > 0) {
+        helado.cantidad = cantidad;
         const cantidadExistente = compraDetalles.querySelectorAll(".lineaPedidoInfo");
         let elementoExistente = null;
 
@@ -117,7 +87,9 @@ function agregarAlCarrito(helado, index) {
         } else {
             const infoSection = arrayCreatePedido(helado);
             const pedidoLinea = document.createElement("div");
-            pedidoLinea.innerHTML = `<span class="lineaPedidoInfo" data-id-helado="${helado.id}">${infoSection}</span>`;
+            pedidoLinea.classList.add("lineaPedidoInfo");
+            pedidoLinea.setAttribute("data-id-helado", helado.id);
+            pedidoLinea.innerHTML = infoSection;
             compraDetalles.appendChild(pedidoLinea);
         }
 
@@ -136,9 +108,12 @@ function agregarAlCarrito(helado, index) {
 }
 
 function limpiarPedido(index) {
-    helados[index].cantidad = 0;
-    renderHelados();
-    limpiarDelCarrito(helados[index]);
+    const helado = arrayHelados.find(item => item.id === helado[index].id);
+    if (helado) {
+        helado.cantidad = 0;
+        renderHelados();
+        limpiarDelCarrito(helado);
+    }
 }
 
 function limpiarDelCarrito(helado) {
@@ -153,7 +128,6 @@ function limpiarDelCarrito(helado) {
 }
 
 function crearBotonesCarrito() {
-
     if (!document.getElementById("botonRemoveAll")) {
         const botonBorrar = document.createElement('button');
         botonBorrar.id = "botonRemoveAll";
@@ -172,8 +146,7 @@ function crearBotonesCarrito() {
 }
 
 function buttonRemove() {
-
-    helados.forEach(helado => helado.cantidad = 0);
+    arrayHelados.forEach(helado => helado.cantidad = 0);
     renderHelados();
 
     compraDetalles.innerHTML = '';
@@ -199,7 +172,6 @@ function buttonRemove() {
     if (finalizarCompraDiv) {
         finalizarCompraDiv.innerHTML = '';
     }
-    localStorage.clear()
 }
 
 function confirmarPedido() {
@@ -284,7 +256,6 @@ function confirmarPedido() {
     });
 }
 
-
 function arrayCreatePedido(helado) {
     arrayHelados = arrayHelados.filter(item => item.id !== helado.id);
 
@@ -309,5 +280,3 @@ function arrayCreatePedido(helado) {
 function updateLocalStorage() {
     localStorage.setItem("infoArrayHelados", JSON.stringify(arrayHelados));
 }
-
-renderHelados();

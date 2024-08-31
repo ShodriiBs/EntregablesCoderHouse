@@ -4,6 +4,7 @@ body{
 
 #megaContenedorHeader{
     background-color: lightcyan;
+    display: flex;
 }
 
 #contenedorHeader{
@@ -13,7 +14,21 @@ body{
     width: max-content;
     margin: 0 auto;
     position: relative;
+    display: flex;
+}
 
+#imgCarrito{
+    display: flex;
+    width: 30px;
+    height: 30px;
+}
+
+#buttonCarrito{
+    display: flex;
+    width: 40px;
+    height: 40px;  
+    justify-content: center;
+    align-items: center;
 }
 
 #LineaDivisoria1{
