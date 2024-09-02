@@ -7,30 +7,30 @@ renderHelados();
 
 function renderHelados(){
     fetch("./JSON/helados.json")
-        .then(response => response.json())
-        .then(data => {
-            contenedorHelados.innerHTML = "";
-            data.forEach((helado, index) => {
-                contenedorHelados.innerHTML += `
-                    <section id="${helado.id}" class="contenedorImagenHelados">
-                        <p class="informacionSectionHelado">${helado.descripcion} $${helado.precio}</p>
-                        <img src="${helado.imgSrc}" class="imagenHelados">
-                        <div class="cantidadSeleccionada">
-                            <p>
-                                <span class="cantidadHeladosSpan">Cantidad:</span>
-                                <span class="cantidadDeHelados" data-index="${index}">0</span>
-                                <button class="botonParaRestar" data-index="${index}">-</button>
-                                <button class="botonParaSumar" data-index="${index}">+</button>
-                            </p>
-                        </div>
-                        <div class="divBotonesUX">
-                            <button class="botonAgregarCarrito" data-index="${index}">Añadir al carrito</button>
-                        </div>
-                    </section>`;
-            });
-
-            asignarEventos(data);
+    .then(response => response.json())
+    .then(data => {
+        contenedorHelados.innerHTML = "";
+        data.forEach((helado, index) => {
+            contenedorHelados.innerHTML += `
+            <section id="${helado.id}" class="contenedorImagenHelados">
+                <p class="informacionSectionHelado">${helado.descripcion} $${helado.precio}</p>
+                <img src="${helado.imgSrc}" class="imagenHelados">
+                <div class="cantidadSeleccionada">
+                    <p>
+                        <span class="cantidadHeladosSpan">Cantidad:</span>
+                        <span class="cantidadDeHelados" data-index="${index}">0</span>
+                        <button class="botonParaRestar" data-index="${index}">-</button>
+                        <button class="botonParaSumar" data-index="${index}">+</button>
+                    </p>
+                </div>
+                <div class="divBotonesUX">
+                    <button class="botonAgregarCarrito" data-index="${index}">Añadir al carrito</button>
+                </div>
+            </section>`;
         });
+
+        asignarEventos(data);
+    });
 }
 
 function asignarEventos(data) {
@@ -61,7 +61,6 @@ function asignarEventos(data) {
         boton.addEventListener("click", () => {
             const index = boton.getAttribute("data-index");
             agregarAlCarrito(data[index], index);
-            crearBotonesCarrito();
         });
     });
 }
@@ -69,65 +68,24 @@ function asignarEventos(data) {
 function agregarAlCarrito(helado, index) {
     const cantidadElement = document.querySelector(`.cantidadDeHelados[data-index="${index}"]`);
     const cantidad = parseInt(cantidadElement.innerText);
+
+    if(cantidad > 0){
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Añadido al carrito",
+            showConfirmButton: false,
+            timer: 2000,
+            width: 300,
+            height: 200
+        });
+
+        arrayCreatePedido(helado, cantidad)
     
-    const infoSection = arrayCreatePedido(helado);
-    Swal.fire({
-        title: "Añadido al carrito",
-        text: cantidad + infoSection,
-        icon: "success"
-    });
-
-    const seccionHelado = document.getElementById(helado.id);
-    const divBotonesUX = seccionHelado.querySelector('.divBotonesUX');
-
-    if (!divBotonesUX.querySelector('.botonLimpiarPedido')) {
-        const botonLimpiar = document.createElement('button');
-        botonLimpiar.className = 'botonLimpiarPedido';
-        botonLimpiar.innerText = 'Limpiar pedido';
-        botonLimpiar.addEventListener('click', () => limpiarPedido(index));
-        divBotonesUX.appendChild(botonLimpiar);
     }
 
     updateLocalStorage();
     
-}
-
-function limpiarPedido(index) {
-    const helado = arrayHelados[index]; // Cambiado aquí
-    if (helado) {
-        helado.cantidad = 0;
-        renderHelados();
-        limpiarDelCarrito(helado);
-    }
-}
-
-function limpiarDelCarrito(helado) {
-    const elementosExistentes = compraDetalles.querySelectorAll(".lineaPedidoInfo");
-    elementosExistentes.forEach(elemento => {
-        if (elemento.dataset.idHelado === helado.id) {
-            elemento.remove();
-        }
-    });
-    arrayHelados = arrayHelados.filter(item => item.id !== helado.id);
-    updateLocalStorage();
-}
-
-function crearBotonesCarrito() {
-    if (!document.getElementById("botonRemoveAll")) {
-        const botonBorrar = document.createElement('button');
-        botonBorrar.id = "botonRemoveAll";
-        botonBorrar.innerText = "Vaciar carrito";
-        botonBorrar.addEventListener('click', buttonRemove);
-        botonesCompra.appendChild(botonBorrar);
-    }
-    
-    if (!document.getElementById("botonConfirmarPedido")) {
-        const botonConfirmar = document.createElement('button');
-        botonConfirmar.id = "botonConfirmarPedido";
-        botonConfirmar.innerText = 'Confirmar pedido';
-        botonConfirmar.addEventListener('click', confirmarPedido);
-        botonesCompra.appendChild(botonConfirmar);
-    }
 }
 
 function buttonRemove() {
@@ -241,20 +199,20 @@ function confirmarPedido() {
     });
 }
 
-function arrayCreatePedido(helado) {
+function arrayCreatePedido(helado, heladoCant) {
     arrayHelados = arrayHelados.filter(item => item.id !== helado.id);
 
     arrayHelados.push({
         id: helado.id,
         Peso: helado.descripcion,
-        Cantidad: helado.cantidad,
+        Cantidad: heladoCant,
         Precio: helado.precio,
         Promo: helado.promo || null
     });
 
     let infoDePedidoHelado = "";
     if (helado.promo) {
-        infoDePedidoHelado = ` promo/s de ${helado.descripcion} (${helado.promo})\n`;
+        infoDePedidoHelado = ` ${helado.descripcion} - Cada promo contiene: ${helado.promo}\n`;
     } else {
         infoDePedidoHelado = ` pote/s de ${helado.descripcion}\n`;
     }

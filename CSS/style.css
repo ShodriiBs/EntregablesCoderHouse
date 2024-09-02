@@ -1,9 +1,12 @@
 body{
-    background-color: lightcyan;
+    background-image: url('https://images.cookforyourlife.org/wp-content/uploads/2020/06/Chocolate-Whipped-Ice-Cream-shutterstock_1010248351.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #megaContenedorHeader{
-    background-color: lightcyan;
+    background-color: transparent;
     display: flex;
 }
 
@@ -32,7 +35,7 @@ body{
 }
 
 #LineaDivisoria1{
-    background-color: black;
+    background-color: white;
     height: 5px;
     margin-bottom: 5px;
 }
@@ -47,7 +50,7 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: black;
+    color: white;
 }
 
 #contenedorHelados{
@@ -89,7 +92,7 @@ body{
 }
 
 .contenedorImagenHelados:hover{
-    background-color: rgb(182, 182, 182);
+    background-color: rgb(216, 242, 250);
 }
 
 #detallesCompra{
@@ -123,17 +126,31 @@ body{
 
 #navList{
     display: flex;
-    align-items: center;
     justify-content: center;
+    position: relative;
     background-color: white;
-    margin-bottom: 15px;
 }
 
-#ulNavHeader li{
-    display: inline;
+#navList ul{
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+#navList a{
     text-decoration: none;
-    margin: 20px;
-    font-size: 20px;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
+
+#navList a:hover{
+    background-color: rgb(216, 242, 250)
+}
+
+#navList li{
+    float: left;
 }
 
 .labelNav{
