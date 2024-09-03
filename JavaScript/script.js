@@ -23,7 +23,7 @@ function renderHelados(){
                         <button class="botonParaSumar" data-index="${index}">+</button>
                     </p>
                 </div>
-                <div class="divBotonesUX">
+                <div class="divBotonesUX" data-index="${index}">
                     <button class="botonAgregarCarrito" data-index="${index}">Añadir al carrito</button>
                 </div>
             </section>`;
@@ -77,11 +77,18 @@ function agregarAlCarrito(helado, index) {
             showConfirmButton: false,
             timer: 2000,
             width: 300,
-            height: 200
         });
 
         arrayCreatePedido(helado, cantidad)
-    
+
+        let divContenedorSection = document.querySelector(`.divBotonesUX[data-index="${index}"]`);
+
+        if (!divContenedorSection.querySelector(".botonLimpiarPedido")) {
+            const botonLimpiar = document.createElement('div');
+            botonLimpiar.className = 'botonLimpiarPedido';
+            botonLimpiar.innerHTML = `<button class="buttonRemoverCarrito">Remover del carrito</button>`;
+            divContenedorSection.appendChild(botonLimpiar);
+        }
     }
 
     updateLocalStorage();

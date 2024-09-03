@@ -37,7 +37,6 @@ body{
 #LineaDivisoria1{
     background-color: white;
     height: 5px;
-    margin-bottom: 5px;
 }
 
 #contenedorHeader:hover{
@@ -53,21 +52,22 @@ body{
     color: white;
 }
 
-#contenedorHelados{
+#contenedorHelados {
     background-color: white;
     display: flex;
-    justify-content: center;
+    width: 90%;
+    margin: 0 auto; 
+    justify-content: center; 
+    margin-bottom: 10px;
 }
 
 .contenedorImagenHelados{
-    display: inline-block;
-    margin: 30px;
+    display: block;
 }
 
 .imagenHelados{
-    width: 200px;
-    height: 180px;
-    position: relative;
+    width: 180px;
+    height: 160px;
 }
 
 .cantidadSeleccionada{
@@ -88,11 +88,12 @@ body{
 
 .contenedorImagenHelados{
     padding: 20px;
-    margin: 0;
+    margin: 10px 10px;
+    border: 2px solid black;
 }
 
 .contenedorImagenHelados:hover{
-    background-color: rgb(216, 242, 250);
+    background-color: rgb(234, 245, 248);
 }
 
 #detallesCompra{
@@ -129,6 +130,10 @@ body{
     justify-content: center;
     position: relative;
     background-color: white;
+    width: 33%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 #navList ul{
@@ -151,6 +156,7 @@ body{
 
 #navList li{
     float: left;
+    margin: 0 2px;
 }
 
 .labelNav{
@@ -177,10 +183,14 @@ body{
     color: white;
     height: 40px;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .informacionSectionHelado{
     font-size: 18px;
+    display: block;
 }
 
 .cantidadDeHelados{
@@ -189,4 +199,32 @@ body{
 
 .cantidadHeladosSpan{
     font-size: 16px;
+}
+
+@media(max-width: 1400px) {
+    .imagenHelados{
+        width: 100px;
+        height: 80px;
+    }
+
+    #contenedorHelados {
+        background-color: white;
+        display: inline-flex;
+        width: 90%;
+        margin: 0 auto; 
+        justify-content: center; 
+        margin-bottom: 10px;
+    }
+}
+
+.botonLimpiarPedido{
+    margin-top: 5px;
+}
+
+.buttonRemoverCarrito{
+    background-color: red;
+    color:white;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
 }

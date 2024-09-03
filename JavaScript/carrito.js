@@ -12,6 +12,7 @@ function carritoDetails(){
                 title: "¡Tu Pedido!",
                 text: `(${cadaPedido.Cantidad}) ${cadaPedido.Peso}`,
                 icon: "info",
+                position: "top-end",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
