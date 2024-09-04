@@ -69,7 +69,7 @@ function agregarAlCarrito(helado, index) {
     const cantidadElement = document.querySelector(`.cantidadDeHelados[data-index="${index}"]`);
     const cantidad = parseInt(cantidadElement.innerText);
 
-    if(cantidad > 0){
+    if (cantidad > 0) {
         Swal.fire({
             position: "top-end",
             icon: "success",
@@ -79,131 +79,32 @@ function agregarAlCarrito(helado, index) {
             width: 300,
         });
 
-        arrayCreatePedido(helado, cantidad)
+        arrayCreatePedido(helado, cantidad);
 
         let divContenedorSection = document.querySelector(`.divBotonesUX[data-index="${index}"]`);
 
-        if (!divContenedorSection.querySelector(".botonLimpiarPedido")) {
+        // Verificar si ya existe el botón "Remover del carrito"
+        if (!divContenedorSection.querySelector(".buttonRemoverCarrito")) {
             const botonLimpiar = document.createElement('div');
-            botonLimpiar.className = 'botonLimpiarPedido';
-            botonLimpiar.innerHTML = `<button class="buttonRemoverCarrito">Remover del carrito</button>`;
+            botonLimpiar.innerHTML = `<button class="buttonRemoverCarrito" id="botonRemover${index}">Remover del carrito</button>`;
             divContenedorSection.appendChild(botonLimpiar);
+
+            const buttonElementRemoveInd = botonLimpiar.querySelector(`#botonRemover${index}`);
+            buttonElementRemoveInd.addEventListener("click", () => clickButtonRemover(index, helado));
         }
     }
 
     updateLocalStorage();
-    
 }
 
-function buttonRemove() {
-    arrayHelados.forEach(helado => helado.cantidad = 0);
-    renderHelados();
+function clickButtonRemover(index, helado) {
+    const cantidadElement = document.querySelector(`.cantidadDeHelados[data-index="${index}"]`);
 
-    compraDetalles.innerHTML = '';
-    localStorage.clear();
-    arrayHelados.length = 0;
-
-    const botonBorrar = document.getElementById("botonRemoveAll");
-    if (botonBorrar) {
-        botonBorrar.remove();
-    }
-
-    const botonConfirmar = document.getElementById("botonConfirmarPedido");
-    if (botonConfirmar) {
-        botonConfirmar.remove();
-    }
-
-    const resumenPedido = document.getElementById("resumenPedido");
-    if (resumenPedido) {
-        resumenPedido.innerHTML = '';
-    }
-
-    const finalizarCompraDiv = document.getElementById("FinalizarCompra");
-    if (finalizarCompraDiv) {
-        finalizarCompraDiv.innerHTML = '';
-    }
-}
-
-function confirmarPedido() {
-    const resumenPedido = document.getElementById("resumenPedido");
-    resumenPedido.innerHTML = '';
-
-    const datosCarrito = localStorage.getItem("infoArrayHelados");
-    if (!datosCarrito) {
-        resumenPedido.innerHTML = "<p>No hay artículos en el carrito para confirmar.</p>";
-        return;
-    }
-
-    arrayHelados = JSON.parse(datosCarrito);
-
-    if (arrayHelados.length === 0) {
-        resumenPedido.innerHTML = "<p>No hay artículos en el carrito para confirmar.</p>";
-        return;
-    }
-
-    const finalizarCompraDiv = document.getElementById("FinalizarCompra");
-    finalizarCompraDiv.innerHTML = '';
-
-    const NameInput = `
-        <p>Por favor, complete los siguientes datos</p>
-        <div>
-            <label for="NombreCompleto">Nombre completo:</label>
-            <input type="text" id="NombreCompleto" name="NombreCompleto" required>
-        </div><br>`;
-    const direccionInput = `
-        <div>
-            <label for="direccionHogar">Dirección hogar:</label>
-            <input type="text" id="direccionHogar" name="direccionHogar" required>
-        </div><br>`;
-    const telefonoInput = `
-        <div>
-            <label for="telefono">Teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" required>
-        </div><br>`;
-    const botonFinalizar = `<button id="botonFinalizarCompra">Finalizar compra</button>`;
-
-    finalizarCompraDiv.innerHTML = NameInput + direccionInput + telefonoInput + botonFinalizar;
-
-    document.getElementById("botonFinalizarCompra").addEventListener('click', () => {
-        const nombre = document.getElementById("NombreCompleto").value;
-        const direccion = document.getElementById("direccionHogar").value;
-        const telefono = document.getElementById("telefono").value;
-        
-        if (nombre && direccion && telefono) {
-            finalizarCompraDiv.innerHTML = `<p>Compra finalizada! En breves instantes nos estaremos comunicando con usted, muchas gracias por elegir (N)ice Cream :)</p>`;
-
-            let contenido = '<h2>Resumen del Pedido</h2>';
-            arrayHelados.forEach(helado => {
-                contenido += `
-                    <div class="pedido-item">
-                        <p><strong>${helado.Peso}</strong></p>
-                        <p>Cantidad: ${helado.Cantidad}</p>
-                        <p>Precio por unidad: $${helado.Precio}</p>
-                        ${helado.Promo ? `<p>Promo: ${helado.Promo}</p>` : ''}
-                        <hr>
-                    </div>
-                `;
-            });
-
-            const total = arrayHelados.reduce((sum, helado) => sum + (helado.Precio * helado.Cantidad), 0);
-            contenido += `<h3>Total: $${total}</h3>`;
-            resumenPedido.innerHTML = contenido;
-
-            localStorage.clear();
-            arrayHelados.length = 0;
-
-            const botonHacerOtroPedido = `<button id="botonHacerOtroPedido">Hacer otro pedido</button>`;
-            finalizarCompraDiv.innerHTML += botonHacerOtroPedido;
-
-            document.getElementById("botonHacerOtroPedido").addEventListener('click', () => {
-                buttonRemove(); 
-                resumenPedido.innerHTML = ''; 
-                finalizarCompraDiv.innerHTML = '';
-            });
-        } else {
-            finalizarCompraDiv.innerHTML += '<p>Por favor, complete todos los campos.</p>';
-        }
-    });
+    cantidadElement.innerText = 0
+    arrayHelados = arrayHelados.filter(item => item.id !== helado.id);
+    updateLocalStorage();
+    const botonLimpiar = document.querySelector(`#botonRemover${index}`)
+    botonLimpiar.remove()
 }
 
 function arrayCreatePedido(helado, heladoCant) {
