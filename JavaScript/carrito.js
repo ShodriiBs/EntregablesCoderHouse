@@ -78,12 +78,12 @@ function confirmPostOperation(fullPedido) {
 
     resumenPedido.innerHTML = `
         <button id="revisarPedidoButton">Revisar Pedido</button>
-        <button id="rehacerPedidoButton">Rehacer Pedido</button>
-        <button id="modificarPedidoButton">Modificar Pedido</button>`
+        <button id="rehacerPedidoButton">Rehacer Pedido</button>`
 
     const infoPedidoFinal = `
         <div id="containerDatosFinalesPedido">
             <div>
+                <p id="labelFinalPedido">Una vez que completes con tus datos, nos estaremos comunicando cuanto antes para llevarte tu pedido :)</p>
                 <span>Nombre completo:</span>
                 <input type="text" id="NombreCompleto" name="NombreCompleto" required>
             </div><br>
@@ -92,8 +92,12 @@ function confirmPostOperation(fullPedido) {
                 <input type="text" id="direccionHogar" name="direccionHogar" required>
             </div><br>
             <div>
+                <span>Correo electrónico:</span>
+                <input type="email" id="emailInput" name="emailInput" required>
+            </div><br>
+            <div>
                 <span>Teléfono:</span>
-                <input type="tel" id="telefono" name="telefono" required>
+                <input type="number" id="telefono" name="telefono" required>
             </div><br>
         </div>`
 
@@ -106,8 +110,6 @@ function confirmPostOperation(fullPedido) {
     const buttonRehacerPedido = document.getElementById("rehacerPedidoButton")
     buttonRehacerPedido.addEventListener("click", () => rehacerPedidoBotonClick(resumenPedido, finalizarCompraDiv))
 
-    const buttonModificarPedido = document.getElementById("modificarPedidoButton")
-    buttonModificarPedido.addEventListener("click", () => modificarPedidoBotonClick())
 }
 
 function VaciarCarritoPostOperation(){
@@ -154,21 +156,6 @@ function rehacerPedidoBotonClick(resumenPedido, finalizarCompraDiv){
     finalizarCompraDiv.innerHTML = ""
     arrayHelados.length = 0
     localStorage.clear()
-}
-
-function modificarPedidoBotonClick() {
-    const divContenedoresSection = document.querySelectorAll('.divBotonesUX');
-
-    divContenedoresSection.forEach((divContenedorSection, index) => {
-        if (!divContenedorSection.querySelector(".buttonUpdateCarrito")) {
-            const botonUpdate = document.createElement('div');
-            botonUpdate.innerHTML = `<button class="buttonUpdateCarrito" id="botonUpdate${index}">Actualizar Carrito</button>`;
-            divContenedorSection.appendChild(botonUpdate);
-
-            const buttonUpdateCarrito = document.getElementById(`botonUpdate${index}`)
-            buttonUpdateCarrito.addEventListener("click", () => actualizarCarrito(index))
-        }
-    });
 }
 
 function confirmarPedido() {

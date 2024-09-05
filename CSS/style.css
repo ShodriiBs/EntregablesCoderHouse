@@ -190,13 +190,6 @@ body{
     margin: 15px;
 }
 
-#modificarPedidoButton{
-    margin: 15px;
-    padding: 15px;
-    background-color: rgb(255, 235, 238);
-    font-size: 16px;
-}
-
 #FinalizarCompra{
     display: block;
     background-color: white;
@@ -261,6 +254,18 @@ body{
     background-color: rgb(141, 5, 5);
 }
 
-#containerDatosFinalesPedido{
+#containerDatosFinalesPedido {
+    display: block;
+    margin: 0 auto;
+}
+
+#labelFinalPedido {
+    text-align: center;
     padding: 20px;
+    font-size: 20px;
+}
+
+#botonFinalizarCompra{
+    margin: 0 auto;
+    justify-content: center;
 }
