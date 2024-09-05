@@ -167,8 +167,34 @@ body{
     background-color: white;
 }
 
-#resumenPedido{
+#divIngresarDatos{
     background-color: white;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+#revisarPedidoButton{
+    margin: 15px;
+    background-color: rgb(224, 202, 253);
+    padding: 15px;
+    font-size: 16px;
+}
+
+#rehacerPedidoButton{
+    background-color: rgb(253, 239, 221);
+    padding: 15px;
+    font-size: 16px;
+    margin: 15px;
+}
+
+#modificarPedidoButton{
+    margin: 15px;
+    padding: 15px;
+    background-color: rgb(255, 235, 238);
+    font-size: 16px;
 }
 
 #FinalizarCompra{
@@ -186,6 +212,10 @@ body{
     display: flex;
     align-items: center;
     margin: 0 auto;
+}
+
+.botonAgregarCarrito:hover{
+    background-color: rgb(36, 110, 36);
 }
 
 .informacionSectionHelado{
@@ -217,10 +247,6 @@ body{
     }
 }
 
-.botonLimpiarPedido{
-    margin-top: 5px;
-}
-
 .buttonRemoverCarrito{
     background-color: red;
     color:white;
@@ -229,4 +255,12 @@ body{
     margin: 0 auto;
     margin-top: 5px;
     padding: 5px 5px;
+}
+
+.buttonRemoverCarrito:hover{
+    background-color: rgb(141, 5, 5);
+}
+
+#containerDatosFinalesPedido{
+    padding: 20px;
 }

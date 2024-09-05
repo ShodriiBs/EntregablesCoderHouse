@@ -4,23 +4,25 @@ buttonCarrito.addEventListener("click", carritoDetails)
 
 function carritoDetails(){
     let infoCarrito = localStorage.getItem("infoArrayHelados")
-
+    let fullPedido = ""
+    
     if(infoCarrito && infoCarrito !== "[]"){
         
         infoCarrito = JSON.parse(infoCarrito)
-        let fullPedido = ""
 
         infoCarrito.forEach(cadaPedido => {
-            fullPedido = fullPedido + `(${cadaPedido.Cantidad}) ${cadaPedido.Peso} \n`
-            Swal.fire({
-                title: "Tu Carrito :)\n\n" + fullPedido,
-                showDenyButton: true,
-                showCancelButton: true,
-                cancelButtonText: "Volver Atrás",
-                confirmButtonText: "Confirmar Carrito",
-                denyButtonText: `Vaciar Carrito`,
-                position: "top-end"
-              }).then((result) => {
+            fullPedido += `(${cadaPedido.Cantidad}) ${cadaPedido.Peso}\n`;
+        });
+
+        Swal.fire({
+            title: "Tu Carrito :)\n\n" + fullPedido,
+            showDenyButton: true,
+            showCancelButton: true,
+            cancelButtonText: "Volver Atrás",
+            confirmButtonText: "Confirmar Carrito",
+            denyButtonText: `Vaciar Carrito`,
+            position: "top-end"
+            }).then((result) => {
                 
                 if (result.isConfirmed) {
                     Swal.fire(
@@ -29,7 +31,7 @@ function carritoDetails(){
                         "success"
                     )
 
-                    confirmPostOperation()
+                    confirmPostOperation(fullPedido)
 
                 } else if (result.isDenied) {
                     Swal.fire(
@@ -37,11 +39,9 @@ function carritoDetails(){
                         "Se vació el carrito con éxito",
                         "info"
                     )
-                    
                     VaciarCarritoPostOperation()
                 }
-              });
-        })
+            });
 
     }else{
         Swal.fire({
@@ -54,24 +54,60 @@ function carritoDetails(){
     }
 }
 
-function confirmPostOperation(){
+function confirmPostOperation(fullPedido) {
     const botonesRemover = document.querySelectorAll(".buttonRemoverCarrito");
-    botonesRemover.forEach((boton) => boton.remove())
+    botonesRemover.forEach((boton) => boton.remove());
 
     const botonesAñadirCarrito = document.querySelectorAll(".botonAgregarCarrito");
     botonesAñadirCarrito.forEach(boton => {
-        boton.disabled = true
-        boton.style.display = "none"
-    })
+        boton.disabled = true;
+        boton.style.display = "none";
+    });
 
-    const botonesRestar = document.querySelectorAll(".botonParaRestar");
+    const botonesRestar = document.querySelectorAll(".botonParaRestar")
     botonesRestar.forEach((boton) => boton.disabled = true)
 
-    const botonesSumar = document.querySelectorAll(".botonParaSumar");
+    const botonesSumar = document.querySelectorAll(".botonParaSumar")
     botonesSumar.forEach((boton) => boton.disabled = true)
 
     const buttonCarritoHeader = document.getElementById("buttonCarrito")
     buttonCarritoHeader.disabled = true
+
+    const resumenPedido = document.getElementById("divIngresarDatos")
+    const finalizarCompraDiv = document.getElementById("FinalizarCompra")
+
+    resumenPedido.innerHTML = `
+        <button id="revisarPedidoButton">Revisar Pedido</button>
+        <button id="rehacerPedidoButton">Rehacer Pedido</button>
+        <button id="modificarPedidoButton">Modificar Pedido</button>`
+
+    const infoPedidoFinal = `
+        <div id="containerDatosFinalesPedido">
+            <div>
+                <span>Nombre completo:</span>
+                <input type="text" id="NombreCompleto" name="NombreCompleto" required>
+            </div><br>
+            <div>
+                <span>Dirección hogar:</span>
+                <input type="text" id="direccionHogar" name="direccionHogar" required>
+            </div><br>
+            <div>
+                <span>Teléfono:</span>
+                <input type="tel" id="telefono" name="telefono" required>
+            </div><br>
+        </div>`
+
+    const botonFinalizar = `<button id="botonFinalizarCompra">Finalizar compra</button>`
+    finalizarCompraDiv.innerHTML = infoPedidoFinal + botonFinalizar
+
+    const buttonRevisarPedido = document.getElementById("revisarPedidoButton")
+    buttonRevisarPedido.addEventListener("click", () => revisarPedidoBotonClick(fullPedido))
+
+    const buttonRehacerPedido = document.getElementById("rehacerPedidoButton")
+    buttonRehacerPedido.addEventListener("click", () => rehacerPedidoBotonClick(resumenPedido, finalizarCompraDiv))
+
+    const buttonModificarPedido = document.getElementById("modificarPedidoButton")
+    buttonModificarPedido.addEventListener("click", () => modificarPedidoBotonClick())
 }
 
 function VaciarCarritoPostOperation(){
@@ -83,49 +119,59 @@ function VaciarCarritoPostOperation(){
         cantidad.innerText = 0
     })
 
+    arrayHelados.length = 0
     localStorage.clear()
 
 }
 
+function revisarPedidoBotonClick(fullPedido){
+    Swal.fire("Tu pedido \n\n" + fullPedido)
+}
+
+function rehacerPedidoBotonClick(resumenPedido, finalizarCompraDiv){
+
+    const botonesAñadirCarrito = document.querySelectorAll(".botonAgregarCarrito");
+    botonesAñadirCarrito.forEach(boton => {
+        boton.disabled = false;
+        boton.style.display = "block";
+    });
+
+    const botonesRestar = document.querySelectorAll(".botonParaRestar")
+    botonesRestar.forEach((boton) => boton.disabled = false)
+
+    const botonesSumar = document.querySelectorAll(".botonParaSumar")
+    botonesSumar.forEach((boton) => boton.disabled = false)
+
+    const buttonCarritoHeader = document.getElementById("buttonCarrito")
+    buttonCarritoHeader.disabled = false
+
+    const cantidadElement = document.querySelectorAll(`.cantidadDeHelados`);
+    cantidadElement.forEach((cantidad) => {
+        cantidad.innerText = 0
+    })
+
+    resumenPedido.innerHTML = ""
+    finalizarCompraDiv.innerHTML = ""
+    arrayHelados.length = 0
+    localStorage.clear()
+}
+
+function modificarPedidoBotonClick() {
+    const divContenedoresSection = document.querySelectorAll('.divBotonesUX');
+
+    divContenedoresSection.forEach((divContenedorSection, index) => {
+        if (!divContenedorSection.querySelector(".buttonUpdateCarrito")) {
+            const botonUpdate = document.createElement('div');
+            botonUpdate.innerHTML = `<button class="buttonUpdateCarrito" id="botonUpdate${index}">Actualizar Carrito</button>`;
+            divContenedorSection.appendChild(botonUpdate);
+
+            const buttonUpdateCarrito = document.getElementById(`botonUpdate${index}`)
+            buttonUpdateCarrito.addEventListener("click", () => actualizarCarrito(index))
+        }
+    });
+}
+
 function confirmarPedido() {
-    const resumenPedido = document.getElementById("resumenPedido");
-    resumenPedido.innerHTML = '';
-
-    const datosCarrito = localStorage.getItem("infoArrayHelados");
-    if (!datosCarrito) {
-        resumenPedido.innerHTML = "<p>No hay artículos en el carrito para confirmar.</p>";
-        return;
-    }
-
-    arrayHelados = JSON.parse(datosCarrito);
-
-    if (arrayHelados.length === 0) {
-        resumenPedido.innerHTML = "<p>No hay artículos en el carrito para confirmar.</p>";
-        return;
-    }
-
-    const finalizarCompraDiv = document.getElementById("FinalizarCompra");
-    finalizarCompraDiv.innerHTML = '';
-
-    const NameInput = `
-        <p>Por favor, complete los siguientes datos</p>
-        <div>
-            <label for="NombreCompleto">Nombre completo:</label>
-            <input type="text" id="NombreCompleto" name="NombreCompleto" required>
-        </div><br>`;
-    const direccionInput = `
-        <div>
-            <label for="direccionHogar">Dirección hogar:</label>
-            <input type="text" id="direccionHogar" name="direccionHogar" required>
-        </div><br>`;
-    const telefonoInput = `
-        <div>
-            <label for="telefono">Teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" required>
-        </div><br>`;
-    const botonFinalizar = `<button id="botonFinalizarCompra">Finalizar compra</button>`;
-
-    finalizarCompraDiv.innerHTML = NameInput + direccionInput + telefonoInput + botonFinalizar;
 
     document.getElementById("botonFinalizarCompra").addEventListener('click', () => {
         const nombre = document.getElementById("NombreCompleto").value;

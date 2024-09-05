@@ -1,9 +1,8 @@
-const contenedorHelados = document.getElementById("contenedorHelados");
-let compraDetalles = document.getElementById("detallesCompra");
-const botonesCompra = document.getElementById("botonesCompra");
-let arrayHelados = [];
+const contenedorHelados = document.getElementById("contenedorHelados")
+let compraDetalles = document.getElementById("detallesCompra")
+let arrayHelados = []
 
-renderHelados();
+renderHelados()
 
 function renderHelados(){
     fetch("./JSON/helados.json")
@@ -83,7 +82,6 @@ function agregarAlCarrito(helado, index) {
 
         let divContenedorSection = document.querySelector(`.divBotonesUX[data-index="${index}"]`);
 
-        // Verificar si ya existe el botón "Remover del carrito"
         if (!divContenedorSection.querySelector(".buttonRemoverCarrito")) {
             const botonLimpiar = document.createElement('div');
             botonLimpiar.innerHTML = `<button class="buttonRemoverCarrito" id="botonRemover${index}">Remover del carrito</button>`;
