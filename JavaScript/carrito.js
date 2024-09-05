@@ -31,7 +31,7 @@ function carritoDetails(){
                         "success"
                     )
 
-                    confirmPostOperation(fullPedido)
+                    confirmPostOperation(fullPedido, infoCarrito)
 
                 } else if (result.isDenied) {
                     Swal.fire(
@@ -54,7 +54,7 @@ function carritoDetails(){
     }
 }
 
-function confirmPostOperation(fullPedido) {
+function confirmPostOperation(fullPedido, infoCarrito) {
     const botonesRemover = document.querySelectorAll(".buttonRemoverCarrito");
     botonesRemover.forEach((boton) => boton.remove());
 
@@ -73,32 +73,34 @@ function confirmPostOperation(fullPedido) {
     const buttonCarritoHeader = document.getElementById("buttonCarrito")
     buttonCarritoHeader.disabled = true
 
-    const resumenPedido = document.getElementById("divIngresarDatos")
+    const divIngresarDatos = document.getElementById("divIngresarDatos")
     const finalizarCompraDiv = document.getElementById("FinalizarCompra")
 
-    resumenPedido.innerHTML = `
+    divIngresarDatos.innerHTML = `
         <button id="revisarPedidoButton">Revisar Pedido</button>
         <button id="rehacerPedidoButton">Rehacer Pedido</button>`
 
     const infoPedidoFinal = `
         <div id="containerDatosFinalesPedido">
-            <div>
-                <p id="labelFinalPedido">Una vez que completes con tus datos, nos estaremos comunicando cuanto antes para llevarte tu pedido :)</p>
-                <span>Nombre completo:</span>
-                <input type="text" id="NombreCompleto" name="NombreCompleto" required>
-            </div><br>
-            <div>
-                <span>Dirección hogar:</span>
-                <input type="text" id="direccionHogar" name="direccionHogar" required>
-            </div><br>
-            <div>
-                <span>Correo electrónico:</span>
-                <input type="email" id="emailInput" name="emailInput" required>
-            </div><br>
-            <div>
-                <span>Teléfono:</span>
-                <input type="number" id="telefono" name="telefono" required>
-            </div><br>
+            <p id="labelFinalPedido">Una vez que completes con tus datos, nos estaremos comunicando cuanto antes para llevarte tu pedido :)</p>
+            <div id="divCentrarInputs">
+                <div class="inputsCompletar">
+                    <span>Nombre completo</span><br>
+                    <input type="text" id="NombreCompleto" name="NombreCompleto" required>
+                </div><br>
+                <div class="inputsCompletar">
+                    <span>Dirección hogar</span><br>
+                    <input type="text" id="direccionHogar" name="direccionHogar" required>
+                </div><br>
+                <div class="inputsCompletar">
+                    <span>Correo electrónico</span><br>
+                    <input type="email" id="emailInput" name="emailInput" required>
+                </div><br>
+                <div class="inputsCompletar">
+                    <span>Teléfono</span><br>
+                    <input type="number" id="telefono" name="telefono" required>
+                </div><br>
+            </div>
         </div>`
 
     const botonFinalizar = `<button id="botonFinalizarCompra">Finalizar compra</button>`
@@ -108,8 +110,10 @@ function confirmPostOperation(fullPedido) {
     buttonRevisarPedido.addEventListener("click", () => revisarPedidoBotonClick(fullPedido))
 
     const buttonRehacerPedido = document.getElementById("rehacerPedidoButton")
-    buttonRehacerPedido.addEventListener("click", () => rehacerPedidoBotonClick(resumenPedido, finalizarCompraDiv))
+    buttonRehacerPedido.addEventListener("click", () => rehacerPedidoBotonClick(divIngresarDatos, finalizarCompraDiv))
 
+    const buttonFinalizarPedido = document.getElementById("botonFinalizarCompra")
+    buttonFinalizarPedido.addEventListener("click", () => finalizarPedidoBotonClick(divIngresarDatos, finalizarCompraDiv, infoCarrito))
 }
 
 function VaciarCarritoPostOperation(){
@@ -130,7 +134,7 @@ function revisarPedidoBotonClick(fullPedido){
     Swal.fire("Tu pedido \n\n" + fullPedido)
 }
 
-function rehacerPedidoBotonClick(resumenPedido, finalizarCompraDiv){
+function rehacerPedidoBotonClick(divIngresarDatos, finalizarCompraDiv){
 
     const botonesAñadirCarrito = document.querySelectorAll(".botonAgregarCarrito");
     botonesAñadirCarrito.forEach(boton => {
@@ -152,52 +156,61 @@ function rehacerPedidoBotonClick(resumenPedido, finalizarCompraDiv){
         cantidad.innerText = 0
     })
 
-    resumenPedido.innerHTML = ""
+    divIngresarDatos.innerHTML = ""
     finalizarCompraDiv.innerHTML = ""
     arrayHelados.length = 0
     localStorage.clear()
 }
 
-function confirmarPedido() {
+function finalizarPedidoBotonClick(divIngresarDatos, finalizarCompraDiv, infoCarrito) {
+    const nombreCompleto = document.getElementById("NombreCompleto").value
+    const direccionHogar = document.getElementById("direccionHogar").value
+    const emailInput = document.getElementById("emailInput").value
+    const telefono = document.getElementById("telefono").value
+    const ResumenCompra = document.getElementById("ResumenCompra")
 
-    document.getElementById("botonFinalizarCompra").addEventListener('click', () => {
-        const nombre = document.getElementById("NombreCompleto").value;
-        const direccion = document.getElementById("direccionHogar").value;
-        const telefono = document.getElementById("telefono").value;
+    if (!nombreCompleto || !direccionHogar || !emailInput || !telefono) {
+        Swal.fire({
+            icon: "error",
+            title: "Campos incompletos",
+            text: "Por favor, complete todos los campos para finalizar el pedido.",
+        });
+    } else {
+        Swal.fire({
+            icon: "success",
+            title: "Pedido Finalizado",
+            text: "¡Muchas gracias por tu compra y por elegirnos! Te dejamos el detalle de la operación. Que tengas un lindo día",
+        });
         
-        if (nombre && direccion && telefono) {
-            finalizarCompraDiv.innerHTML = `<p>Compra finalizada! En breves instantes nos estaremos comunicando con usted, muchas gracias por elegir (N)ice Cream :)</p>`;
+        let contenido = '<h2>Resumen del Pedido</h2>';
+        infoCarrito.forEach(helado => {
+            contenido += `
+                <div class="pedido-item">
+                    <p><strong>${helado.Peso}</strong></p>
+                    <p>Cantidad: ${helado.Cantidad}</p>
+                    <p>Precio por unidad: $${helado.Precio}</p>
+                    ${helado.Promo ? `<p>Promo: ${helado.Promo}</p>` : ''}
+                    <hr>
+                </div>
+            `;
+        });
 
-            let contenido = '<h2>Resumen del Pedido</h2>';
-            arrayHelados.forEach(helado => {
-                contenido += `
-                    <div class="pedido-item">
-                        <p><strong>${helado.Peso}</strong></p>
-                        <p>Cantidad: ${helado.Cantidad}</p>
-                        <p>Precio por unidad: $${helado.Precio}</p>
-                        ${helado.Promo ? `<p>Promo: ${helado.Promo}</p>` : ''}
-                        <hr>
-                    </div>
-                `;
-            });
+        const total = infoCarrito.reduce((sum, helado) => sum + (helado.Precio * helado.Cantidad), 0);
+        contenido += `<h3>Total: $${total}</h3>`;
+        ResumenCompra.innerHTML = `<p>Muchas gracias ${nombreCompleto}, aquí tu factura</p>
+        <p>Dirección: ${direccionHogar}</p>
+        <p>Correo electrónico: ${emailInput}</p>
+        <p>Teléfono: ${telefono}</p>` + contenido;
 
-            const total = arrayHelados.reduce((sum, helado) => sum + (helado.Precio * helado.Cantidad), 0);
-            contenido += `<h3>Total: $${total}</h3>`;
-            resumenPedido.innerHTML = contenido;
+        localStorage.clear();
+        infoCarrito.length = 0;
 
-            localStorage.clear();
-            arrayHelados.length = 0;
+        const botonHacerOtroPedido = `<button id="botonHacerOtroPedido">Hacer otro pedido</button>`;
+        finalizarCompraDiv.innerHTML += botonHacerOtroPedido;
 
-            const botonHacerOtroPedido = `<button id="botonHacerOtroPedido">Hacer otro pedido</button>`;
-            finalizarCompraDiv.innerHTML += botonHacerOtroPedido;
-
-            document.getElementById("botonHacerOtroPedido").addEventListener('click', () => {
-                buttonRemove(); 
-                resumenPedido.innerHTML = ''; 
-                finalizarCompraDiv.innerHTML = '';
-            });
-        } else {
-            finalizarCompraDiv.innerHTML += '<p>Por favor, complete todos los campos.</p>';
-        }
-    });
+        document.getElementById("botonHacerOtroPedido").addEventListener('click', () => {
+            divIngresarDatos.innerHTML = ''; 
+            finalizarCompraDiv.innerHTML = '';
+        });
+    }
 }

@@ -172,7 +172,18 @@ body{
     display: flex;
     margin: 0 auto;
     justify-content: center;
-    width: 50%;
+    align-items: center;
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+#ResumenCompra{
+    background-color: white;
+    display: block;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
     margin-bottom: 10px;
 }
 
@@ -183,11 +194,19 @@ body{
     font-size: 16px;
 }
 
+#revisarPedidoButton:hover{
+    background-color: rgb(175, 120, 211);
+}
+
 #rehacerPedidoButton{
     background-color: rgb(253, 239, 221);
     padding: 15px;
     font-size: 16px;
     margin: 15px;
+}
+
+#rehacerPedidoButton:hover{
+    background-color: rgb(209, 139, 127);
 }
 
 #FinalizarCompra{
@@ -260,12 +279,32 @@ body{
 }
 
 #labelFinalPedido {
-    text-align: center;
+    display: flex;
+    justify-content: center;
     padding: 20px;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 #botonFinalizarCompra{
     margin: 0 auto;
     justify-content: center;
+    display: flex;
+    background-color: rgb(155, 236, 175);
+    padding: 10px;
+    font-size: 20px;
+}
+
+#botonFinalizarCompra:hover{
+    background-color: rgb(83, 160, 76);
+}
+
+#divCentrarInputs{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+}
+
+.inputsCompletar{
+    margin: 0 10px 20px 10px;
 }
