@@ -7,7 +7,7 @@ renderSabores()
 renderHelados()
 
 function renderSabores(){
-    fetch("./JSON/sabores.json")
+    fetch("./db/sabores.json")
     .then(response => response.json())
     .then(data => {
         listaSaboresHelados.innerHTML = "";
@@ -20,7 +20,7 @@ function renderSabores(){
 }
 
 function renderHelados() {
-    fetch("./JSON/helados.json")
+    fetch("./db/helados.json")
         .then(response => response.json())
         .then(data => {
             try {

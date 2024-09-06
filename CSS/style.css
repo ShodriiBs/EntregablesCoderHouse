@@ -1,5 +1,6 @@
-body{
-    background-image: url('https://images.cookforyourlife.org/wp-content/uploads/2020/06/Chocolate-Whipped-Ice-Cream-shutterstock_1010248351.jpg');
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), 
+                url('https://images.cookforyourlife.org/wp-content/uploads/2020/06/Chocolate-Whipped-Ice-Cream-shutterstock_1010248351.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -155,6 +156,12 @@ body{
 
 #quienesSomosNav{
     background-color: white;
+    display: block;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: center;
+    width: 75%;
+    padding: 10px;
 }
 
 #divIngresarDatos{
@@ -313,6 +320,16 @@ body{
 
 #saboresHeladosDiv{
     background-color: white;
+    display: block;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px;
+    width: 75%;
+}
+
+#saboresHelados{
+    font-size: 24px;
 }
 
 .grid-sabores {
@@ -325,7 +342,16 @@ body{
 
 .grid-sabores li {
     text-align: center;
-    background-color: #f0f0f0;
+    background-color: #ffedd8;
     padding: 10px;
     border-radius: 5px;
+    margin: 0px 20px;
+}
+
+.grid-sabores li:hover{
+    background-color: rgb(211, 199, 143);
+}
+
+#tituloQuienesSomos{
+    font-size: 24px;
 }
