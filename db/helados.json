@@ -3,32 +3,32 @@
         "id": "heladoXCuarto",
         "descripcion": "1/4kg de helado",
         "precio": 1000,
-        "imgSrc": "https://saintmoritz.com.ar/wp-content/uploads/2020/08/helados-saint-mortiz-mediokg-1-1.png"
+        "imgSrc": "assets/Helado_un_cuarto.png"
     },
     {
         "id": "heladoXMedio",
         "descripcion": "1/2kg de helado",
         "precio": 1800,
-        "imgSrc": "https://saintmoritz.com.ar/wp-content/uploads/2020/08/helados-saint-mortiz-mediokg-.png"
+        "imgSrc": "assets/Helado_un_medio.png"
     },
     {
         "id": "heladoXKilo",
         "descripcion": "1kg de helado",
         "precio": 3500,
-        "imgSrc": "https://as1.ftcdn.net/v2/jpg/03/88/63/08/1000_F_388630882_V9W4Gj5KsLp5g7V1Z1uwr8JdP305yY6J.jpg"
+        "imgSrc": "assets/Helado_un_kilo.jpg"
     },
     {
         "id": "heladoPromo1",
         "descripcion": "Promo 1",
         "precio": 6000,
-        "imgSrc": "https://bluebell.com.ar/carta/wp-content/uploads/kilohelado.jpg",
+        "imgSrc": "assets/Helado_promo1.jpg",
         "promo": "1 pote de 1kg, 1 pote de 1/2kg y 1 pote de 1/4kg"
     },
     {
         "id": "heladoPromo2",
         "descripcion": "Promo 2",
         "precio": 6500,
-        "imgSrc": "https://saintmoritz.com.ar/wp-content/uploads/2020/09/promo-2-300x263.jpg",
+        "imgSrc": "assets/Helado_promo2.jpg",
         "promo": "2 potes de 1kg"
     }
 ]
