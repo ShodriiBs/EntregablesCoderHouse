@@ -115,11 +115,12 @@ function agregarAlCarrito(helado, index) {
                 const buttonElementRemoveInd = botonLimpiar.querySelector(`#botonRemover${index}`);
                 buttonElementRemoveInd.addEventListener("click", () => clickButtonRemover(index, helado));
             }
+
+            updateLocalStorage();
+
         } else {
             Swal.fire("Selecciona una cantidad mayor a 0");
         }
-
-        updateLocalStorage();
     } catch (error) {
         Swal.fire({
             position: "top-end",
