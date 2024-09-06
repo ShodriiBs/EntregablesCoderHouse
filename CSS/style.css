@@ -9,6 +9,10 @@ body {
 #megaContenedorHeader{
     background-color: transparent;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    text-align: center;
 }
 
 #contenedorHeader{
@@ -18,7 +22,31 @@ body {
     width: max-content;
     margin: 0 auto;
     position: relative;
+}
+
+#LineaDivisoria1{
+    background-color: white;
+    height: 5px;
+}
+
+#contenedorHeader:hover{
+    font-size: xx-large;
+    transition: 2s;
+}
+
+#tituloHeladeria {
+    text-align: center; 
+    color: white;
+    margin: 0 auto;
+}
+
+#contenedorHelados {
+    background-color: white;
     display: flex;
+    width: 90%;
+    margin: 0 auto; 
+    justify-content: center; 
+    margin-bottom: 10px;
 }
 
 #imgCarrito{
@@ -33,33 +61,8 @@ body {
     height: 40px;  
     justify-content: center;
     align-items: center;
-}
-
-#LineaDivisoria1{
-    background-color: white;
-    height: 5px;
-}
-
-#contenedorHeader:hover{
-    font-size: xx-large;
-    transition: 2s;
-}
-
-#tituloHeladeria{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
-}
-
-#contenedorHelados {
-    background-color: white;
-    display: flex;
-    width: 90%;
-    margin: 0 auto; 
-    justify-content: center; 
-    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 100px;
 }
 
 .contenedorImagenHelados{
@@ -116,15 +119,19 @@ body {
     font-size: 30px;
 }
 
+#barraNavegar{
+    display: flex;
+}
+
 #navList{
     display: flex;
     justify-content: center;
-    position: relative;
     background-color: white;
-    width: 33%;
+    width: 40%;
     margin: 0 auto;
     margin-bottom: 10px;
     margin-top: 10px;
+    margin-right: 430px;
 }
 
 #navList ul{
@@ -244,15 +251,17 @@ body {
     .imagenHelados{
         width: 100px;
         height: 80px;
+        display: flex;
+        margin: 0 auto;
     }
 
     #contenedorHelados {
         background-color: white;
-        display: inline-flex;
-        width: 90%;
-        margin: 0 auto; 
-        justify-content: center; 
         margin-bottom: 10px;
+    }
+
+    #navList{
+        margin-right: 200px;
     }
 }
 
