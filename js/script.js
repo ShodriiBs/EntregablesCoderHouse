@@ -52,8 +52,6 @@ function renderHelados() {
                     showConfirmButton: false,
                     timer: 2000
                 });
-            } finally {
-                
             }
         })
 }
@@ -117,6 +115,8 @@ function agregarAlCarrito(helado, index) {
                 const buttonElementRemoveInd = botonLimpiar.querySelector(`#botonRemover${index}`);
                 buttonElementRemoveInd.addEventListener("click", () => clickButtonRemover(index, helado));
             }
+        } else {
+            Swal.fire("Selecciona una cantidad mayor a 0");
         }
 
         updateLocalStorage();
@@ -128,9 +128,7 @@ function agregarAlCarrito(helado, index) {
             showConfirmButton: false,
             timer: 1500
         });
-    } finally {
-        
-    }
+    } 
 }
 
 function clickButtonRemover(index, helado) {

@@ -100,10 +100,14 @@ function confirmPostOperation(fullPedido, infoCarrito) {
                     <span>Teléfono</span><br>
                     <input type="number" id="telefono" name="telefono" required>
                 </div><br>
+                <div class="inputsCompletar">
+                    <span>Nro de tarjeta</span><br>
+                    <input type="number" id="nroTarjeta" name="nroTarjeta" required>
+                </div><br>                
             </div>
         </div>`
 
-    const botonFinalizar = `<button id="botonFinalizarCompra">Finalizar compra</button>`
+    const botonFinalizar = `<button id="botonFinalizarCompra">Finalizar compra</button><br>`
     finalizarCompraDiv.innerHTML = infoPedidoFinal + botonFinalizar
 
     const buttonRevisarPedido = document.getElementById("revisarPedidoButton")
@@ -136,30 +140,49 @@ function revisarPedidoBotonClick(fullPedido){
 
 function rehacerPedidoBotonClick(divIngresarDatos, finalizarCompraDiv){
 
-    const botonesAñadirCarrito = document.querySelectorAll(".botonAgregarCarrito");
-    botonesAñadirCarrito.forEach(boton => {
-        boton.disabled = false;
-        boton.style.display = "block";
-    });
+    Swal.fire({
+        title: "Seguro que quieres rehacer el pedido?",
+        text: "Tendrás que hacerlo nuevamente desde cero",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, estoy segur@",
+        cancelButtonText: "Volver atrás"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Carrito vacío",
+            text: "A llenarlo nuevamente",
+            icon: "success"
+          });
 
-    const botonesRestar = document.querySelectorAll(".botonParaRestar")
-    botonesRestar.forEach((boton) => boton.disabled = false)
-
-    const botonesSumar = document.querySelectorAll(".botonParaSumar")
-    botonesSumar.forEach((boton) => boton.disabled = false)
-
-    const buttonCarritoHeader = document.getElementById("buttonCarrito")
-    buttonCarritoHeader.disabled = false
-
-    const cantidadElement = document.querySelectorAll(`.cantidadDeHelados`);
-    cantidadElement.forEach((cantidad) => {
-        cantidad.innerText = 0
-    })
-
-    divIngresarDatos.innerHTML = ""
-    finalizarCompraDiv.innerHTML = ""
-    arrayHelados.length = 0
-    localStorage.clear()
+          const botonesAñadirCarrito = document.querySelectorAll(".botonAgregarCarrito");
+          botonesAñadirCarrito.forEach(boton => {
+              boton.disabled = false;
+              boton.style.display = "block";
+          });
+      
+          const botonesRestar = document.querySelectorAll(".botonParaRestar")
+          botonesRestar.forEach((boton) => boton.disabled = false)
+      
+          const botonesSumar = document.querySelectorAll(".botonParaSumar")
+          botonesSumar.forEach((boton) => boton.disabled = false)
+      
+          const buttonCarritoHeader = document.getElementById("buttonCarrito")
+          buttonCarritoHeader.disabled = false
+      
+          const cantidadElement = document.querySelectorAll(`.cantidadDeHelados`);
+          cantidadElement.forEach((cantidad) => {
+              cantidad.innerText = 0
+          })
+      
+          divIngresarDatos.innerHTML = ""
+          finalizarCompraDiv.innerHTML = ""
+          arrayHelados.length = 0
+          localStorage.clear()
+        }
+      });
 }
 
 function finalizarPedidoBotonClick(divIngresarDatos, finalizarCompraDiv, infoCarrito) {
@@ -167,9 +190,10 @@ function finalizarPedidoBotonClick(divIngresarDatos, finalizarCompraDiv, infoCar
     const direccionHogar = document.getElementById("direccionHogar").value
     const emailInput = document.getElementById("emailInput").value
     const telefono = document.getElementById("telefono").value
+    const nroTarjeta = document.getElementById("nroTarjeta").value
     const ResumenCompra = document.getElementById("ResumenCompra")
 
-    if (!nombreCompleto || !direccionHogar || !emailInput || !telefono) {
+    if (!nombreCompleto || !direccionHogar || !emailInput || !telefono || !nroTarjeta) {
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -208,11 +232,40 @@ function finalizarPedidoBotonClick(divIngresarDatos, finalizarCompraDiv, infoCar
         const botonHacerOtroPedido = `<button id="botonRealizarOtraCompra">Realizar otra compra</button><br>`
         ResumenCompra.innerHTML += botonHacerOtroPedido
         divIngresarDatos.innerHTML = ""
+        finalizarCompraDiv.innerHTML = ""
 
-        document.getElementById("botonRealizarOtraCompra").addEventListener('click', () => {
-            rehacerPedidoBotonClick(divIngresarDatos, finalizarCompraDiv)
-            ResumenCompra.innerHTML = "";
-        })
+        document.getElementById("botonRealizarOtraCompra").addEventListener('click', () => iniciarNuevoPedido(divIngresarDatos, finalizarCompraDiv, ResumenCompra))
 
     }
+}
+
+function iniciarNuevoPedido(divIngresarDatos, finalizarCompraDiv, ResumenCompra){
+
+    const botonesAñadirCarrito = document.querySelectorAll(".botonAgregarCarrito");
+    botonesAñadirCarrito.forEach(boton => {
+        boton.disabled = false;
+        boton.style.display = "block";
+    });
+      
+    const botonesRestar = document.querySelectorAll(".botonParaRestar")
+    botonesRestar.forEach((boton) => boton.disabled = false)
+      
+    const botonesSumar = document.querySelectorAll(".botonParaSumar")
+    botonesSumar.forEach((boton) => boton.disabled = false)
+      
+    const buttonCarritoHeader = document.getElementById("buttonCarrito")
+    buttonCarritoHeader.disabled = false
+      
+    const cantidadElement = document.querySelectorAll(`.cantidadDeHelados`);
+    cantidadElement.forEach((cantidad) => {
+        cantidad.innerText = 0
+    })
+      
+    divIngresarDatos.innerHTML = ""
+    finalizarCompraDiv.innerHTML = ""
+    arrayHelados.length = 0
+    localStorage.clear()
+    ResumenCompra.innerHTML = "";
+
+    Swal.fire("¡Ya podés seguir comprando!")
 }
