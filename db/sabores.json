@@ -17,7 +17,7 @@
     },
     {
       "sabor": "Caramelo",
-      "disponible": false
+      "disponible": true
     },
     {
       "sabor": "Coco",
@@ -33,7 +33,7 @@
     },
     {
       "sabor": "Nuez",
-      "disponible": false
+      "disponible": true
     },
     {
       "sabor": "Café",
@@ -49,7 +49,7 @@
     },
     {
       "sabor": "Arándano",
-      "disponible": false
+      "disponible": true
     },
     {
       "sabor": "Maracuyá",
@@ -65,7 +65,7 @@
     },
     {
       "sabor": "Frutilla",
-      "disponible": false
+      "disponible": true
     },
     {
       "sabor": "Avellana",
@@ -77,6 +77,6 @@
     },
     {
       "sabor": "Tiramisú",
-      "disponible": false
+      "disponible": true
     }
 ]
