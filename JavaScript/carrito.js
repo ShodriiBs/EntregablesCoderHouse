@@ -205,12 +205,14 @@ function finalizarPedidoBotonClick(divIngresarDatos, finalizarCompraDiv, infoCar
         localStorage.clear();
         infoCarrito.length = 0;
 
-        const botonHacerOtroPedido = `<button id="botonHacerOtroPedido">Hacer otro pedido</button>`;
-        finalizarCompraDiv.innerHTML += botonHacerOtroPedido;
+        const botonHacerOtroPedido = `<button id="botonRealizarOtraCompra">Realizar otra compra</button><br>`
+        ResumenCompra.innerHTML += botonHacerOtroPedido
+        divIngresarDatos.innerHTML = ""
 
-        document.getElementById("botonHacerOtroPedido").addEventListener('click', () => {
-            divIngresarDatos.innerHTML = ''; 
-            finalizarCompraDiv.innerHTML = '';
-        });
+        document.getElementById("botonRealizarOtraCompra").addEventListener('click', () => {
+            rehacerPedidoBotonClick(divIngresarDatos, finalizarCompraDiv)
+            ResumenCompra.innerHTML = "";
+        })
+
     }
 }

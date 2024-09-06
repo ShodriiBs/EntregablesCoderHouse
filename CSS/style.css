@@ -101,27 +101,17 @@ body{
     padding-left: 50px;
 }
 
-
-#botonesCompra{
-    display: flex;
+#nuestrosHeladosDiv{
     background-color: white;
-    justify-content: end;
-    padding-right: 30px;
-    padding-bottom: 15px;
-}
-
-#botonRemoveAll{
-    background-color: rgb(245, 72, 72);
-    color: white;
-}
-
-#allSaboresDiv{
-    background-color: white;
-    display: flex;
+    display: block;
     justify-content: center;
+    margin: 0 auto;
+    text-align: center;
+    width: 75%;
+    padding: 10px;
 }
 
-#tituloSabores{
+#NuestrosHelados{
     font-size: 30px;
 }
 
@@ -307,4 +297,35 @@ body{
 
 .inputsCompletar{
     margin: 0 10px 20px 10px;
+}
+
+#botonRealizarOtraCompra{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: rgb(201, 252, 245);
+}
+
+#botonRealizarOtraCompra:hover{
+    background-color: rgb(148, 221, 211);
+}
+
+#saboresHeladosDiv{
+    background-color: white;
+}
+
+.grid-sabores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.grid-sabores li {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
 }

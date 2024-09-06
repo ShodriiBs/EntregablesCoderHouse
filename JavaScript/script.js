@@ -1,8 +1,23 @@
 const contenedorHelados = document.getElementById("contenedorHelados")
 let compraDetalles = document.getElementById("detallesCompra")
+let listaSaboresHelados = document.getElementById("listaSaboresHelados")
 let arrayHelados = []
 
+renderSabores()
 renderHelados()
+
+function renderSabores(){
+    fetch("./JSON/sabores.json")
+    .then(response => response.json())
+    .then(data => {
+        listaSaboresHelados.innerHTML = "";
+        data.forEach(helado => {
+            if (helado.disponible) {
+                listaSaboresHelados.innerHTML += `<li>${helado.sabor}</li>`;
+            }
+        })     
+    })
+}
 
 function renderHelados() {
     fetch("./JSON/helados.json")
@@ -86,7 +101,7 @@ function agregarAlCarrito(helado, index) {
                 icon: "success",
                 title: "Añadido al carrito",
                 showConfirmButton: false,
-                timer: 2000,
+                timer: 1500,
                 width: 300,
             });
 
@@ -111,7 +126,7 @@ function agregarAlCarrito(helado, index) {
             icon: "error",
             title: "Error al añadir el helado al carrito" + error,
             showConfirmButton: false,
-            timer: 2000
+            timer: 1500
         });
     } finally {
         

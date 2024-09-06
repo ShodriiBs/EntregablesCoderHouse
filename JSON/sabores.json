@@ -1,0 +1,82 @@
+[
+    {
+      "sabor": "Vainilla",
+      "disponible": true
+    },
+    {
+      "sabor": "Chocolate",
+      "disponible": true
+    },
+    {
+      "sabor": "Fresa",
+      "disponible": true
+    },
+    {
+      "sabor": "Menta con Chocolate",
+      "disponible": true
+    },
+    {
+      "sabor": "Caramelo",
+      "disponible": false
+    },
+    {
+      "sabor": "Coco",
+      "disponible": true
+    },
+    {
+      "sabor": "Frambuesa",
+      "disponible": true
+    },
+    {
+      "sabor": "Mango",
+      "disponible": true
+    },
+    {
+      "sabor": "Nuez",
+      "disponible": false
+    },
+    {
+      "sabor": "Café",
+      "disponible": true
+    },
+    {
+      "sabor": "Pistacho",
+      "disponible": true
+    },
+    {
+      "sabor": "Limón",
+      "disponible": true
+    },
+    {
+      "sabor": "Arándano",
+      "disponible": false
+    },
+    {
+      "sabor": "Maracuyá",
+      "disponible": true
+    },
+    {
+      "sabor": "Galleta con Crema",
+      "disponible": true
+    },
+    {
+      "sabor": "Dulce de Leche",
+      "disponible": true
+    },
+    {
+      "sabor": "Frutilla",
+      "disponible": false
+    },
+    {
+      "sabor": "Avellana",
+      "disponible": true
+    },
+    {
+      "sabor": "Banana Split",
+      "disponible": true
+    },
+    {
+      "sabor": "Tiramisú",
+      "disponible": false
+    }
+]
